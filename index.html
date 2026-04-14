@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accang | Premium Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-solid: #ffffff;
+            --border: rgba(15, 23, 42, 0.08);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-light: #bae6fd;
+            --accent: #0ea5e9;
+            --accent-grad: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+            --shadow-soft: 0 10px 40px -10px rgba(14, 165, 233, 0.15);
+            --shadow-hover: 0 20px 50px -10px rgba(37, 99, 235, 0.25);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-gradient); color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Initial Load Animations */
+        .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUpAnim 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } 
+        .delay-3 { animation-delay: 0.3s; } .delay-4 { animation-delay: 0.4s; }
+        @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+
+        /* Ambient Orbs */
+        .orb { position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.4; z-index: -1; animation: floatOrb 10s ease-in-out infinite alternate; pointer-events: none; }
+        .orb-1 { width: 40vw; height: 40vw; background: linear-gradient(135deg, #e0f2fe, #bae6fd); top: -10%; left: -10%; }
+        .orb-2 { width: 50vw; height: 50vw; background: linear-gradient(135deg, #dbeafe, #bfdbfe); bottom: -20%; right: -10%; animation-delay: -5s; }
+        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 30px) scale(1.1); } }
+
+        /* Navbar */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.6); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 100; transition: 0.3s; }
+        .brand { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+        .brand img { height: 38px; border-radius: 8px; box-shadow: var(--shadow-soft); }
+        .brand span { font-size: 1.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .brand dot { color: var(--accent); }
+        
+        /* Language Dropdown */
+        .lang-select { 
+            appearance: none; -webkit-appearance: none; background: var(--surface-solid) url("data:image/svg+xml;utf8,<svg fill='%230f172a' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 8px center; 
+            background-size: 18px; border: 1px solid var(--border); color: var(--text-main); padding: 8px 32px 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
+        }
+        .lang-select:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--shadow-soft); }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 40px; padding: 120px 8% 60px; position: relative; }
+        .hero-content { z-index: 10; }
+        
+        .greeting { font-size: 1.2rem; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; display: block; }
+        .typewriter-container { font-size: 4.5rem; font-weight: 800; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; color: var(--text-main); font-family: 'Space Grotesk', sans-serif; min-height: 110px; }
+        .typewriter-text { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .cursor { display: inline-block; width: 4px; height: 1em; background-color: var(--text-main); vertical-align: text-bottom; animation: blink 1s step-end infinite; margin-left: 4px; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .hero p { color: var(--text-muted); font-size: 1.15rem; max-width: 550px; line-height: 1.7; margin-bottom: 40px; }
+        
+        .socials { display: flex; gap: 15px; }
+        .btn-social { display: flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem; color: #fff; background: var(--text-main); transition: 0.3s; box-shadow: 0 10px 20px rgba(15,23,42,0.1); border: 1px solid transparent; }
+        .btn-social svg { width: 18px; fill: currentColor; }
+        .btn-social:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(15,23,42,0.2); }
+        .btn-primary { background: var(--accent-grad); border: none; }
+        .btn-primary:hover { box-shadow: var(--shadow-hover); }
+
+        /* 3D Canvas Area */
+        .hero-3d { width: 100%; height: 550px; position: relative; cursor: grab; display: flex; align-items: center; justify-content: center; }
+        .hero-3d:active { cursor: grabbing; }
+
+        /* Bento Box Layout */
+        .section { padding: 80px 8%; max-width: 1400px; margin: auto; position: relative; z-index: 10; }
+        .section-title { font-size: 2.5rem; margin-bottom: 40px; color: var(--text-main); letter-spacing: -1px; }
+
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-bottom: 60px; }
+        .bento-item { background: var(--surface); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 20px; padding: 35px; transition: 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .bento-item:hover { border-color: var(--accent-light); box-shadow: var(--shadow-soft); background: var(--surface-solid); }
+        
+        /* About Profile */
+        .bento-profile { grid-column: span 4; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; position: relative; overflow: hidden; }
+        .bento-profile::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--accent-grad); }
+        .bento-profile img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--surface-solid); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .bento-profile h3 { font-size: 1.6rem; margin-bottom: 5px; }
+        .bento-profile p { color: var(--accent); font-size: 0.95rem; font-weight: 600; margin-bottom: 25px; background: var(--accent-light); padding: 4px 12px; border-radius: 20px; display: inline-block; }
+        .info-list { width: 100%; text-align: left; list-style: none; }
+        .info-list li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--border); font-size: 0.95rem; font-weight: 500; }
+        .info-list li:last-child { border-bottom: none; }
+        .info-list li span:first-child { color: var(--text-muted); }
+
+        /* Skills */
+        .bento-skills { grid-column: span 8; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .skill-card { background: var(--surface-solid); border: 1px solid var(--border); padding: 20px; border-radius: 16px; display: flex; align-items: center; gap: 16px; transition: 0.3s; }
+        .skill-card:hover { border-color: var(--accent); box-shadow: var(--shadow-soft); transform: translateY(-3px) scale(1.02); }
+        .skill-icon { font-size: 1.8rem; min-width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 12px; border: 1px solid var(--border); }
+        .skill-info h4 { font-size: 1.1rem; margin-bottom: 4px; color: var(--text-main); }
+        .skill-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* Enhanced Project Cards */
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; perspective: 1500px; }
+        /* KARTU TIDAK BOLEH KLIK KE WEB, HANYA HOVER 3D */
+        .card { background: var(--surface-solid); border: 1px solid var(--border); border-radius: 20px; padding: 10px; display: flex; flex-direction: column; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); transform-style: preserve-3d; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
+        .card:hover { border-color: var(--accent-light); box-shadow: var(--shadow-hover); transform: translateY(-5px); }
+        
+        .card-inner { padding: 15px; display: flex; flex-direction: column; height: 100%; transform: translateZ(30px); }
+        .card-img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; background: linear-gradient(135deg, #f1f5f9, #e2e8f0); border: 1px solid var(--border); transition: 0.5s; pointer-events: none; }
+        .card:hover .card-img { transform: scale(1.03); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        
+        .card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--text-main); }
+        .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; }
+        .badge { font-size: 0.75rem; font-weight: 700; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; color: var(--text-muted); border: 1px solid var(--border); }
+        
+        .btn-action { text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #fff; background: var(--text-main); transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; position: relative; z-index: 50; }
+        .btn-action.dl { background: var(--accent-grad); }
+        .btn-action:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .btn-action.dl:hover { box-shadow: var(--shadow-soft); }
+
+        /* Scroll Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; padding-top: 130px; text-align: center; }
+            .hero-content { align-items: center; margin: auto; }
+            .bento-profile { grid-column: span 12; }
+            .bento-skills { grid-column: span 12; }
+            .socials { justify-content: center; }
+            .hero-3d { height: 400px; }
+        }
+        @media (max-width: 768px) {
+            .typewriter-container { font-size: 3rem; min-height: 80px; }
+            .bento-skills { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1 fade-up delay-1"></div>
+    <div class="orb orb-2 fade-up delay-2"></div>
+
+    <nav class="fade-up">
+        <div class="brand" onclick="checkAdmin()">
+            <img src="assets/logo.png" alt="Logo" onerror="this.style.display='none'">
+            <span>Accang<dot>.</dot></span>
+        </div>
+        <select class="lang-select" id="langSelect">
+            <option value="id">Indonesia (Indonesia)</option>
+            <option value="en">English (English)</option>
+            <option value="zh">中文 (China)</option>
+            <option value="ko">한국어 (Korea)</option>
+            <option value="ja">日本語 (Japan)</option>
+            <option value="vi">Tiếng Việt (Vietnam)</option>
+            <option value="km">ភាសាខ្មែរ (Cambodia)</option>
+        </select>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <span class="greeting fade-up delay-1" id="heroGreet">Hello, I'm</span>
+            <div class="typewriter-container fade-up delay-2">
+                <span class="typewriter-text" id="typewriter"></span><span class="cursor">|</span>
+            </div>
+            <p id="heroDesc" class="fade-up delay-3">Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.</p>
+            
+            <div class="socials fade-up delay-4">
+                <a href="https://wa.me/6285137027046" target="_blank" class="btn-social btn-primary">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884Z"/></svg>
+                    WhatsApp
+                </a>
+                <a href="https://tiktok.com/@wshzu" target="_blank" class="btn-social">
+                    <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                    Tiktok
+                </a>
+            </div>
+        </div>
+        
+        <div class="hero-3d fade-up delay-2" id="canvas-container"></div>
+    </div>
+
+    <div class="section reveal">
+        <h2 class="section-title" id="aboutTitle">Profile & Expertise</h2>
+        <div class="bento-grid">
+            <div class="bento-item bento-profile">
+                <img src="assets/profile.jpg" alt="Accang" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=0f172a&color=fff&size=200'">
+                <h3>Accang</h3>
+                <p id="profRole">Lead Developer & Engineer</p>
+                <ul class="info-list">
+                    <li><span id="lblAge">Umur</span> <span id="valAge">18 Tahun</span></li>
+                    <li><span id="lblEdu">Pendidikan</span> <span id="valEdu">SMK / Setara</span></li>
+                    <li><span id="lblLoc">Lokasi</span> <span id="valLoc">Indonesia</span></li>
+                    <li><span id="lblExp">Pengalaman</span> <span id="valExp">3+ Tahun</span></li>
+                </ul>
+            </div>
+
+            <div class="bento-item bento-skills">
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #0ea5e9; background: #e0f2fe;">🐍</div>
+                    <div class="skill-info"><h4>Python</h4><p id="s1">Backend & Data Analytics</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #eab308; background: #fef9c3;">⚡</div>
+                    <div class="skill-info"><h4>JavaScript</h4><p id="s2">Frontend & Node.js</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #10b981; background: #dcfce7;">💬</div>
+                    <div class="skill-info"><h4>WA Bot Engine</h4><p id="s3">Automated CS & API Integration</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #3b82f6; background: #dbeafe;">✈️</div>
+                    <div class="skill-info"><h4>Telegram Bot</h4><p id="s4">Scraping & Auto Moderation</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #8b5cf6; background: #f3e8ff;">🧠</div>
+                    <div class="skill-info"><h4>AI Development</h4><p id="s5">Machine Learning & LLMs</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #ec4899; background: #fce7f3;">📱</div>
+                    <div class="skill-info"><h4>App Architecture</h4><p id="s6">Web & Mobile Solutions</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #06b6d4; background: #cffafe;">🔌</div>
+                    <div class="skill-info"><h4>PocketMine-MP</h4><p id="s7">Server Core Plugin Dev</p></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #14b8a6; background: #ccfbf1;">🎨</div>
+                    <div class="skill-info"><h4>MC Bedrock</h4><p id="s8">Resource Pack UI/UX</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section reveal">
+        <h2 class="section-title" id="projectsTitle">Exclusive Archive</h2>
+        <div class="proj-grid" id="projectList"></div>
+    </div>
+
+    <div class="section reveal" style="padding-top: 0;">
+        <h2 class="section-title" id="toolsTitle">Deployed Services</h2>
+        <div class="proj-grid" id="toolList"></div>
+    </div>
+
+    <script>
+        /* === KOMPREHENSIF KAMUS BAHASA === */
+        const langData = {
+            id: {
+                greet: "Hello, I'm", typewords: ["Accang.", "Seorang Developer.", "Enterprise Architect."],
+                desc: "Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.",
+                about: "Profil & Keahlian", role: "Lead Developer & Engineer",
+                lAge: "Umur", vAge: "18 Tahun", lEdu: "Pendidikan", vEdu: "SMK / Setara",
+                lLoc: "Lokasi", vLoc: "Indonesia", lExp: "Pengalaman", vExp: "3+ Tahun",
+                s1: "Backend & Analitik Data", s2: "Frontend & Node.js", s3: "CS Otomatis & Integrasi API", s4: "Scraping & Auto Moderasi",
+                s5: "Machine Learning & LLMs", s6: "Solusi Web & Mobile", s7: "Dev Plugin Server Core", s8: "Resource Pack UI/UX",
+                projects: "Arsip Eksklusif", tools: "Layanan Sistem", dlBtn: "Unduh File", visitBtn: "Akses Web",
+                badgeProj: "PACKAGE", badgeTool: "LIVE APP"
+            },
+            en: {
+                greet: "Hello, I'm", typewords: ["Accang.", "a Developer.", "Enterprise Architect."],
+                desc: "Crafting digital architecture with precision. Specializing in corporate ecosystems, AI, and large-scale automated systems.",
+                about: "Profile & Expertise", role: "Lead Developer & Engineer",
+                lAge: "Age", vAge: "18 Years", lEdu: "Education", vEdu: "Vocational",
+                lLoc: "Location", vLoc: "Indonesia", lExp: "Experience", vExp: "3+ Years",
+                s1: "Backend & Data Analytics", s2: "Frontend & Node.js", s3: "Automated CS & API Integration", s4: "Scraping & Auto Moderation",
+                s5: "Machine Learning & LLMs", s6: "Web & Mobile Solutions", s7: "Server Core Plugin Dev", s8: "Resource Pack UI/UX",
+                projects: "Exclusive Archive", tools: "Deployed Services", dlBtn: "Download", visitBtn: "Access Web",
+                badgeProj: "PACKAGE", badgeTool: "LIVE APP"
+            },
+            zh: {
+                greet: "你好，我是", typewords: ["Accang.", "一名开发者.", "企业架构师."],
+                desc: "精准构建数字架构。专攻企业生态系统、人工智能和大规模自动化系统。",
+                about: "个人简介与专业技能", role: "首席开发与工程师",
+                lAge: "年龄", vAge: "18岁", lEdu: "教育", vEdu: "职业高中",
+                lLoc: "地点", vLoc: "印度尼西亚", lExp: "经验", vExp: "3年以上",
+                s1: "后端与数据分析", s2: "前端与Node.js", s3: "自动客服与API集成", s4: "数据抓取与自动审核",
+                s5: "机器学习与LLMs", s6: "Web与移动解决方案", s7: "服务器核心插件开发", s8: "资源包UI/UX",
+                projects: "独家档案", tools: "已部署服务", dlBtn: "下载文件", visitBtn: "访问网站",
+                badgeProj: "压缩包", badgeTool: "在线应用"
+            },
+            ko: {
+                greet: "안녕하세요, 저는", typewords: ["Accang.", "개발자입니다.", "엔터프라이즈 아키텍트입니다."],
+                desc: "정밀한 디지털 아키텍처 구축. 기업 생태계, AI 및 대규모 자동화 시스템 인프라 전문.",
+                about: "프로필 및 전문성", role: "수석 개발자 및 엔지니어",
+                lAge: "나이", vAge: "18세", lEdu: "학력", vEdu: "직업 고등학교",
+                lLoc: "위치", vLoc: "인도네시아", lExp: "경력", vExp: "3년 이상",
+                s1: "백엔드 및 데이터 분석", s2: "프론트엔드 및 Node.js", s3: "자동 CS 및 API 통합", s4: "스크래핑 및 자동 중재",
+                s5: "머신러닝 및 LLMs", s6: "웹 및 모바일 솔루션", s7: "서버 코어 플러그인 개발", s8: "리소스 팩 UI/UX",
+                projects: "독점 아카이브", tools: "배포된 서비스", dlBtn: "다운로드", visitBtn: "웹 액세스",
+                badgeProj: "패키지", badgeTool: "라이브 앱"
+            },
+            ja: {
+                greet: "こんにちは、私は", typewords: ["Accang.", "開発者です.", "エンタープライズアーキテクト."],
+                desc: "精度重視のデジタルアーキテクチャ構築。企業エコシステム、AI、大規模な自動化システムインフラを専門としています。",
+                about: "プロフィールと専門知識", role: "リード開発者＆エンジニア",
+                lAge: "年齢", vAge: "18歳", lEdu: "学歴", vEdu: "職業高校",
+                lLoc: "場所", vLoc: "インドネシア", lExp: "経験", vExp: "3年以上",
+                s1: "バックエンドとデータ分析", s2: "フロントエンドとNode.js", s3: "自動CSとAPI統合", s4: "スクレイピングと自動モデレーション",
+                s5: "機械学習とLLMs", s6: "Webとモバイルソリューション", s7: "サーバーコアプラグイン開発", s8: "リソースパックUI/UX",
+                projects: "限定アーカイブ", tools: "デプロイ済みサービス", dlBtn: "ダウンロード", visitBtn: "ウェブにアクセス",
+                badgeProj: "パッケージ", badgeTool: "ライブアプリ"
+            },
+            vi: {
+                greet: "Xin chào, tôi là", typewords: ["Accang.", "Một Nhà phát triển.", "Kiến trúc sư Doanh nghiệp."],
+                desc: "Chế tạo kiến trúc kỹ thuật số với độ chính xác cao. Chuyên môn về hệ sinh thái doanh nghiệp, AI và hệ thống tự động hóa.",
+                about: "Hồ sơ & Chuyên môn", role: "Nhà phát triển & Kỹ sư trưởng",
+                lAge: "Tuổi", vAge: "18 Tuổi", lEdu: "Học vấn", vEdu: "Trường nghề",
+                lLoc: "Vị trí", vLoc: "Indonesia", lExp: "Kinh nghiệm", vExp: "Hơn 3 năm",
+                s1: "Backend & Phân tích Dữ liệu", s2: "Frontend & Node.js", s3: "CS Tự động & Tích hợp API", s4: "Scraping & Tự động kiểm duyệt",
+                s5: "Học máy & LLMs", s6: "Giải pháp Web & Mobile", s7: "Phát triển Plugin Server", s8: "Resource Pack UI/UX",
+                projects: "Lưu trữ Độc quyền", tools: "Dịch vụ Hệ thống", dlBtn: "Tải xuống", visitBtn: "Truy cập Web",
+                badgeProj: "GÓI", badgeTool: "ỨNG DỤNG TRỰC TIẾP"
+            },
+            km: {
+                greet: "សួស្តី ខ្ញុំគឺ", typewords: ["Accang.", "អ្នកអភិវឌ្ឍន៍ម្នាក់.", "ស្ថាបត្យករសហគ្រាស."],
+                desc: "បង្កើតស្ថាបត្យកម្មឌីជីថលដោយភាពច្បាស់លាស់។ ជំនាញក្នុងប្រព័ន្ធអេកូឡូស៊ីសាជីវកម្ម, AI, និងប្រព័ន្ធស្វ័យប្រវត្តិកម្មទ្រង់ទ្រាយធំ។",
+                about: "ប្រវត្តិរូប និងជំនាញ", role: "អ្នកអភិវឌ្ឍន៍ និងវិស្វករឈានមុខ",
+                lAge: "អាយុ", vAge: "១៨ ឆ្នាំ", lEdu: "ការអប់រំ", vEdu: "វិជ្ជាជីវៈ",
+                lLoc: "ទីតាំង", vLoc: "ប្រទេសឥណ្ឌូនេស៊ី", lExp: "បទពិសោធន៍", vExp: "៣+ ឆ្នាំ",
+                s1: "Backend & វិភាគទិន្នន័យ", s2: "Frontend & Node.js", s3: "CS ស្វ័យប្រវត្តិ & API", s4: "Scraping & ការសម្របសម្រួល",
+                s5: "Machine Learning & LLMs", s6: "ដំណោះស្រាយ Web & Mobile", s7: "ការអភិវឌ្ឍន៍ Plugin ម៉ាស៊ីនមេ", s8: "Resource Pack UI/UX",
+                projects: "គម្រោងផ្តាច់មុខ", tools: "សេវាកម្មប្រព័ន្ធ", dlBtn: "ទាញយក", visitBtn: "ចូលមើលវិបសាយ",
+                badgeProj: "កញ្ចប់", badgeTool: "កម្មវិធីផ្ទាល់"
+            }
+        };
+
+        let currentLang = 'id';
+        const langSelect = document.getElementById('langSelect');
+
+        /* === TYPEWRITER EFFECT === */
+        let typewordIdx = 0, charIdx = 0, isDeleting = false, typeTimeout;
+        const typeElement = document.getElementById('typewriter');
+
+        function startTypewriter() {
+            clearTimeout(typeTimeout);
+            typewordIdx = 0; charIdx = 0; isDeleting = false;
+            typeElement.textContent = "";
+            typeEffect();
+        }
+
+        function typeEffect() {
+            const currentWord = langData[currentLang].typewords[typewordIdx];
+            if (isDeleting) {
+                charIdx--;
+                typeElement.textContent = currentWord.substring(0, charIdx);
+            } else {
+                charIdx++;
+                typeElement.textContent = currentWord.substring(0, charIdx);
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIdx === currentWord.length) {
+                typeSpeed = 2000; isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                typewordIdx = (typewordIdx + 1) % langData[currentLang].typewords.length;
+                typeSpeed = 500;
+            }
+            typeTimeout = setTimeout(typeEffect, typeSpeed);
+        }
+        setTimeout(startTypewriter, 1000);
+
+        /* === LANGUAGE CHANGE HANDLER === */
+        langSelect.addEventListener('change', (e) => {
+            currentLang = e.target.value;
+            const ld = langData[currentLang];
+            
+            // Restart Typewriter immediately
+            startTypewriter();
+
+            // Update Texts
+            document.getElementById('heroGreet').innerText = ld.greet;
+            document.getElementById('heroDesc').innerText = ld.desc;
+            document.getElementById('aboutTitle').innerText = ld.about;
+            document.getElementById('profRole').innerText = ld.role;
+            
+            document.getElementById('lblAge').innerText = ld.lAge; document.getElementById('valAge').innerText = ld.vAge;
+            document.getElementById('lblEdu').innerText = ld.lEdu; document.getElementById('valEdu').innerText = ld.vEdu;
+            document.getElementById('lblLoc').innerText = ld.lLoc; document.getElementById('valLoc').innerText = ld.vLoc;
+            document.getElementById('lblExp').innerText = ld.lExp; document.getElementById('valExp').innerText = ld.vExp;
+            
+            for(let i=1; i<=8; i++) document.getElementById('s'+i).innerText = ld['s'+i];
+            
+            document.getElementById('projectsTitle').innerText = ld.projects;
+            document.getElementById('toolsTitle').innerText = ld.tools;
+            
+            renderAllCards();
+        });
+
+        /* === SCROLL REVEAL === */
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        /* === THREE.JS 3D INTERACTIVE CORE (LIGHT THEME) === */
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 6;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = false; controls.enablePan = false;
+        controls.autoRotate = true; controls.autoRotateSpeed = 1.5;
+        controls.enableDamping = true; controls.dampingFactor = 0.05;
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0x0ea5e9, 2); pointLight.position.set(5, 5, 5); scene.add(pointLight);
+        const pointLight2 = new THREE.PointLight(0xffffff, 1.5); pointLight2.position.set(-5, -5, -5); scene.add(pointLight2);
+
+        const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 128, 16);
+        const material = new THREE.MeshStandardMaterial({ 
+            color: 0xffffff, roughness: 0.1, metalness: 0.5, 
+            transparent: true, opacity: 0.9, wireframe: true 
+        });
+        const object3D = new THREE.Mesh(geometry, material);
+        scene.add(object3D);
+        
+        const geoPoints = new THREE.TorusKnotGeometry(1.5, 0.6, 64, 8);
+        const matPoints = new THREE.PointsMaterial({ color: 0x0ea5e9, size: 0.03 });
+        const points = new THREE.Points(geoPoints, matPoints);
+        scene.add(points);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            object3D.rotation.x += 0.001; object3D.rotation.y += 0.002;
+            points.rotation.x -= 0.001; points.rotation.z += 0.001;
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        /* === ADMIN SECURITY === */
+        function checkAdmin() {
+            let clks = parseInt(sessionStorage.getItem('adminClicks') || 0) + 1;
+            sessionStorage.setItem('adminClicks', clks);
+            if (clks >= 3) {
+                sessionStorage.removeItem('adminClicks');
+                if(prompt("SYSTEM OVERRIDE. Input Passkey:") === "accang123") {
+                    sessionStorage.setItem("isAdmin", "true"); window.location.href = "admin.html";
+                }
+            }
+        }
+
+        /* === DATA RENDERING & 3D CARD INTERACTION === */
+        function renderAllCards() {
+            renderCards('projectList', 'acc_projects');
+            renderCards('toolList', 'acc_tools');
+        }
+
+        function renderCards(id, dataKey) {
+            const data = JSON.parse(localStorage.getItem(dataKey)) || [];
+            if(data.length === 0) {
+                document.getElementById(id).innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; border: 1px dashed var(--border); border-radius: 16px; color: var(--text-muted);">Database Empty.</div>`;
+                return;
+            }
+            const isProject = dataKey === 'acc_projects';
+            const ld = langData[currentLang];
+            
+            // KARTU TIDAK MEMILIKI ONCLICK. TOMBOL A SAJA YANG MEMILIKI HREF
+            document.getElementById(id).innerHTML = data.map((item, index) => `
+                <div class="card fade-up" style="animation-delay: ${index * 0.1}s">
+                    <div class="card-inner">
+                        ${item.img ? `<img src="${item.img}" class="card-img">` : `<div class="card-img" style="font-size:3rem; color:#94a3b8; align-items:center; display:flex; justify-content:center;">${item.icon || '/>'}</div>`}
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <div class="card-footer">
+                            <span class="badge">${isProject ? ld.badgeProj : ld.badgeTool}</span>
+                            ${isProject 
+                                ? `<a href="${item.link}" download="${item.name}.zip" class="btn-action dl">${ld.dlBtn}</a>`
+                                : `<a href="${item.link}" class="btn-action">${ld.visitBtn}</a>`
+                            }
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            initCardTilt();
+        }
+        
+        setTimeout(renderAllCards, 500);
+
+        function initCardTilt() {
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                    const rotateX = ((y - rect.height/2) / (rect.height/2)) * -10; 
+                    const rotateY = ((x - rect.width/2) / (rect.width/2)) * 10;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>

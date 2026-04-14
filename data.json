@@ -1,4 +1,12 @@
 {
-  "acc_projects": [],
+  "acc_projects": [
+    {
+      "name": "jhs",
+      "desc": "gd",
+      "link": "",
+      "icon": "",
+      "img": ""
+    }
+  ],
   "acc_tools": []
 }

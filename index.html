@@ -375,18 +375,28 @@
         }
 
         /* === DATA RENDERING & 3D CARD INTERACTION === */
-        function renderAllCards() {
-            renderCards('projectList', 'acc_projects');
-            renderCards('toolList', 'acc_tools');
+        async function renderAllCards() {
+            try {
+                // Fetch dari data.json (Pastikan jalan di Live Server/Hosting)
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                
+                renderCards('projectList', data.acc_projects || [], true);
+                renderCards('toolList', data.acc_tools || [], false);
+            } catch (error) {
+                console.error("Gagal memuat data JSON:", error);
+                const errorMsg = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; border: 1px dashed var(--border); border-radius: 16px; color: var(--text-muted);">Gagal memuat data atau data kosong.</div>`;
+                document.getElementById('projectList').innerHTML = errorMsg;
+                document.getElementById('toolList').innerHTML = errorMsg;
+            }
         }
 
-        function renderCards(id, dataKey) {
-            const data = JSON.parse(localStorage.getItem(dataKey)) || [];
+        function renderCards(id, data, isProject) {
             if(data.length === 0) {
                 document.getElementById(id).innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; border: 1px dashed var(--border); border-radius: 16px; color: var(--text-muted);">Database Kosong.</div>`;
                 return;
             }
-            const isProject = dataKey === 'acc_projects';
             
             document.getElementById(id).innerHTML = data.map((item, index) => `
                 <div class="card fade-up" style="animation-delay: ${index * 0.1}s">
@@ -408,6 +418,7 @@
         }
         
         setTimeout(renderAllCards, 500);
+
 
         function initCardTilt() {
             document.querySelectorAll('.card').forEach(card => {

@@ -39,9 +39,9 @@ button{padding:12px;border:none;background:#fff;color:#000;border-radius:6px;cur
 </select>
 <input id="nama" placeholder="Nama">
 <textarea id="deskripsi" placeholder="Deskripsi"></textarea>
-<input id="path" placeholder="Link / Path">
-<input id="icon" placeholder="Icon emoji">
-<input type="file" id="img">
+<input id="path" placeholder="Link / Path File">
+<input id="imgPath" placeholder="Link / Path Foto (Contoh: assets/gambar.jpg)">
+<input id="icon" placeholder="Icon Emoji (Jika tidak ada foto)">
 <button onclick="saveData()">Simpan</button>
 </div>
 
@@ -61,19 +61,17 @@ function saveData(){
     let nama=document.getElementById("nama").value;
     let desc=document.getElementById("deskripsi").value;
     let link=document.getElementById("path").value;
+    let imgPath=document.getElementById("imgPath").value;
     let icon=document.getElementById("icon").value;
-    let file=document.getElementById("img").files[0];
 
-    function process(imgBase64){
-        let db=JSON.parse(localStorage.getItem(kat))||[];
-        let data={name:nama, desc:desc, link:link, icon:icon, img:imgBase64};
-        if(editIndex!==null){db[editIndex]=data; editIndex=null; editKey=null;}
-        else{db.push(data);}
-        localStorage.setItem(kat,JSON.stringify(db));
-        alert("Saved!"); loadData(); clearForm();
-    }
-    if(file){ let reader=new FileReader(); reader.onload=e=>process(e.target.result); reader.readAsDataURL(file); }
-    else{ process(editIndex!==null ? (JSON.parse(localStorage.getItem(kat))[editIndex].img || "") : ""); }
+    let db=JSON.parse(localStorage.getItem(kat))||[];
+    let data={name:nama, desc:desc, link:link, icon:icon, img:imgPath};
+    
+    if(editIndex!==null){db[editIndex]=data; editIndex=null; editKey=null;}
+    else{db.push(data);}
+    
+    localStorage.setItem(kat,JSON.stringify(db));
+    alert("Saved!"); loadData(); clearForm();
 }
 
 function loadData(){
@@ -95,14 +93,21 @@ function deleteData(key,i){
 
 function editData(key,i){
     let db=JSON.parse(localStorage.getItem(key))||[]; let data=db[i];
-    document.getElementById("kategori").value=key; document.getElementById("nama").value=data.name;
-    document.getElementById("deskripsi").value=data.desc; document.getElementById("path").value=data.link;
-    document.getElementById("icon").value=data.icon; editIndex=i; editKey=key;
+    document.getElementById("kategori").value=key; 
+    document.getElementById("nama").value=data.name;
+    document.getElementById("deskripsi").value=data.desc; 
+    document.getElementById("path").value=data.link;
+    document.getElementById("imgPath").value=data.img || "";
+    document.getElementById("icon").value=data.icon; 
+    editIndex=i; editKey=key;
 }
 
 function clearForm(){
-    document.getElementById("nama").value=""; document.getElementById("deskripsi").value="";
-    document.getElementById("path").value=""; document.getElementById("icon").value=""; document.getElementById("img").value="";
+    document.getElementById("nama").value=""; 
+    document.getElementById("deskripsi").value="";
+    document.getElementById("path").value=""; 
+    document.getElementById("imgPath").value=""; 
+    document.getElementById("icon").value=""; 
 }
 
 function generateJSON() {

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accang | TikTok Downloader</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg: linear-gradient(135deg,#ffffff,#f1f5f9,#e2e8f0);
+    --card: rgba(255,255,255,0.7);
+    --border: rgba(15,23,42,0.08);
+    --text:#0f172a;
+    --muted:#64748b;
+    --accent: linear-gradient(135deg,#38bdf8,#2563eb);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;}
+body{
+    background:var(--bg);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
+}
+
+/* animation */
+.fade-up{
+    opacity:0;
+    transform:translateY(20px);
+    animation:fadeUp .6s ease forwards;
+}
+@keyframes fadeUp{
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* NAV */
+.nav{
+    width:100%;
+    max-width:520px;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+.btn-back{color:#64748b;text-decoration:none;font-weight:600;}
+.btn-back:hover{color:#000}
+
+/* CARD */
+.container{
+    width:100%;
+    max-width:520px;
+    background:var(--card);
+    backdrop-filter:blur(12px);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:30px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.05);
+}
+
+/* HEADER */
+h1{
+    text-align:center;
+    font-size:2.4rem;
+}
+.desc{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    margin-bottom:12px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* loader */
+.loader{display:none;text-align:center;margin-top:20px;}
+
+/* RESULT */
+.result{display:none;margin-top:20px;}
+.video{
+    display:flex;
+    gap:12px;
+    margin-bottom:15px;
+    position:relative;
+}
+.video img{
+    width:90px;height:90px;border-radius:12px;
+}
+
+/* watermark */
+.wm{
+    position:absolute;
+    bottom:5px;
+    left:5px;
+    font-size:10px;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    padding:2px 6px;
+    border-radius:5px;
+}
+
+/* buttons */
+.btn-group{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.btn-dl{
+    padding:13px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:#fff;
+    cursor:pointer;
+    text-align:center;
+    font-weight:600;
+    transition:.3s;
+}
+.btn-dl:hover{
+    background:#0ea5e9;
+    color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav fade-up">
+    <a href="../index.html" class="btn-back" id="backBtn">← Kembali</a>
+    <select id="lang">
+        <option value="id">ID</option>
+        <option value="en">EN</option>
+        <option value="zh">中文</option>
+        <option value="ko">한국어</option>
+        <option value="ja">日本語</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="km">ខ្មែរ</option>
+    </select>
+</div>
+
+<div class="container fade-up">
+    <h1>Accang.</h1>
+    <p class="desc" id="desc">TikTok Downloader Premium</p>
+
+    <input id="url" placeholder="Tempel link TikTok...">
+    <button onclick="getData()" id="btn">Download</button>
+
+    <div class="loader" id="loader">Loading...</div>
+
+    <div class="result" id="result">
+        <div class="video">
+            <img id="thumb">
+            <div class="wm">Accang.</div>
+            <div>
+                <b id="title"></b><br>
+                <small id="author"></small>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <div class="btn-dl" onclick="dl('wm')">📱 Watermark</div>
+            <div class="btn-dl" onclick="dl('no')">🎬 No Watermark</div>
+            <div class="btn-dl" onclick="dlHD()">🔥 No WM HD</div>
+            <div class="btn-dl" onclick="dl('mp3')">🎵 MP3</div>
+        </div>
+    </div>
+</div>
+
+<script>
+let dataGlobal=null;
+
+/* FULL LANGUAGE */
+const langData={
+id:{desc:"TikTok Downloader Premium",back:"← Kembali",btn:"Download"},
+en:{desc:"Premium TikTok Downloader",back:"← Back",btn:"Download"},
+zh:{desc:"抖音下载器",back:"← 返回",btn:"下载"},
+ko:{desc:"틱톡 다운로드",back:"← 뒤로",btn:"다운로드"},
+ja:{desc:"TikTokダウンローダー",back:"← 戻る",btn:"ダウンロード"},
+vi:{desc:"Tải TikTok",back:"← Quay lại",btn:"Tải"},
+km:{desc:"ទាញ TikTok",back:"← ត្រឡប់",btn:"ទាញ"}
+};
+
+document.getElementById("lang").onchange=(e)=>{
+    let l=langData[e.target.value];
+    document.getElementById("desc").innerText=l.desc;
+    document.getElementById("backBtn").innerText=l.back;
+    document.getElementById("btn").innerText=l.btn;
+};
+
+/* FETCH */
+async function getData(){
+    let url=document.getElementById("url").value;
+    let loader=document.getElementById("loader");
+    let result=document.getElementById("result");
+
+    loader.style.display="block";
+    result.style.display="none";
+
+    try{
+        let res=await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
+        let json=await res.json();
+
+        dataGlobal=json.data;
+
+        thumb.src=dataGlobal.cover;
+        title.innerText=dataGlobal.title;
+        author.innerText="@"+dataGlobal.author.unique_id;
+
+        loader.style.display="none";
+        result.style.display="block";
+    }catch{
+        alert("Error");
+        loader.style.display="none";
+    }
+}
+
+/* FORCE DOWNLOAD */
+function forceDownload(url,name){
+    fetch(url)
+    .then(res=>res.blob())
+    .then(blob=>{
+        let a=document.createElement("a");
+        a.href=URL.createObjectURL(blob);
+        a.download=name;
+        a.click();
+    });
+}
+
+function dl(type){
+    let link="";
+    if(type==="wm") link=dataGlobal.wmplay;
+    if(type==="no") link=dataGlobal.play;
+    if(type==="mp3") link=dataGlobal.music;
+
+    forceDownload(link,"accang_file");
+}
+
+/* HD + FOLLOW */
+function dlHD(){
+    window.open("https://www.tiktok.com/@wshzu","_blank");
+    setTimeout(()=>{
+        forceDownload(dataGlobal.hdplay || dataGlobal.play,"accang_hd");
+    },1500);
+}
+</script>
+
+</body>
+</html>

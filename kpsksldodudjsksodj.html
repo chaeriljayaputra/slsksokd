@@ -48,7 +48,7 @@ button{padding:12px;border:none;background:#fff;color:#000;border-radius:6px;cur
 <div class="panel">
 <h2>Data List</h2>
 <div id="list"></div>
-<button class="btn-generate" onclick="generateJSON()">Generate & Download data.json</button>
+<button class="btn-generate" onclick="copyJSON()">Copy data.json</button>
 </div>
 </div>
 
@@ -110,17 +110,18 @@ function clearForm(){
     document.getElementById("icon").value=""; 
 }
 
-function generateJSON() {
+function copyJSON() {
     const projects = JSON.parse(localStorage.getItem("acc_projects")) || [];
     const tools = JSON.parse(localStorage.getItem("acc_tools")) || [];
     const data = { acc_projects: projects, acc_tools: tools };
     
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "data.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const jsonString = JSON.stringify(data, null, 2);
+    
+    navigator.clipboard.writeText(jsonString).then(() => {
+        alert("Berhasil disalin! Silakan paste ke file data.json Anda.");
+    }).catch(err => {
+        alert("Gagal menyalin: " + err);
+    });
 }
 
 function logout(){ sessionStorage.removeItem("isAdmin"); location.href="index.html"; }

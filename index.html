@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Accang Portofolio | Premium Architect</title>
-    <meta name="description" content="Portfolio Accang - Lead Developer & Enterprise Architect. Spesialis ekosistem korporat, AI, dan otomatisasi tinggi. Kunjungi project eksklusif saya di accang.vercel.app">
-    <meta name="keywords" content="Accang Portofolio, Portfolio Accang, Accang, Premium Architect, Web Developer Indonesia, AI Development, Programmer Accang, Enterprise Architect, accang.vercel.app, Accang Developer">
-    <meta name="author" content="Accang">
+    <title>Accang Portofolio | Premium Architect & Developer</title>
+    <meta name="description" content="Portfolio Accang (Chaeril Jaya Putra) - Lead Developer & Enterprise Architect. Spesialis ekosistem korporat, AI, Bot Automation, dan sistem skala tinggi.">
+    <meta name="keywords" content="Accang Portofolio, Portfolio Accang, Accang, Premium Architect, Web Developer Indonesia, AI Development, Programmer Accang, Enterprise Architect, accang.vercel.app, Accang Developer, Jasa Web, Sistem Otomatisasi, Python Developer, WhatsApp Bot, Telegram Bot, Chaeril Jaya Putra, Chaeril Jaya, Chaeril, Jaya Putra, Programmer Chaeril Jaya Putra, Developer Chaeril, Portofolio Chaeril Jaya Putra, Pembuat Bot Telegram, Pembuat Bot WhatsApp, Web Design, Web Programming, Backend Developer, Fullstack Developer Indonesia">
+    <meta name="author" content="Chaeril Jaya Putra (Accang)">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://accang.vercel.app/">
     
-    <link rel="icon" type="image/jpeg" href="assets/profile.jpg">
-    <link rel="shortcut icon" type="image/jpeg" href="assets/profile.jpg">
-    <link rel="apple-touch-icon" href="assets/profile.jpg">
+    <link rel="icon" type="image/jpeg" href="https://accang.vercel.app/assets/profile.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="https://accang.vercel.app/assets/profile.jpg">
+    <link rel="apple-touch-icon" href="https://accang.vercel.app/assets/profile.jpg">
     
     <meta property="og:title" content="Accang Portofolio | Premium Architect">
     <meta property="og:description" content="Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi.">
     <meta property="og:url" content="https://accang.vercel.app/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="assets/profile.jpg">
+    <meta property="og:image" content="https://accang.vercel.app/assets/profile.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Accang Portofolio">
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -28,8 +30,9 @@
     
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #090616 0%, #171131 50%, #0b0717 100%);
-            --surface: rgba(30, 25, 60, 0.6);
+            /* Background Seragam & Tema Dark Space Premium */
+            --bg-main: #0b0717;
+            --surface: rgba(30, 25, 60, 0.4);
             --surface-solid: #171131;
             --border: rgba(139, 92, 246, 0.2);
             --text-main: #ffffff;
@@ -42,11 +45,10 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-gradient); color: var(--text-main); overflow-x: hidden; min-height: 100vh; top: 0 !important; position: static !important; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-main); color: var(--text-main); overflow-x: hidden; min-height: 100vh; top: 0 !important; position: static !important; }
         
         /* ---------------- WELCOME PRELOADER ---------------- */
-        #welcome-preloader { position: fixed; inset: 0; background: #0b0717; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease; }
-        
+        #welcome-preloader { position: fixed; inset: 0; background: var(--bg-main); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease; }
         .w-icons { display: flex; gap: 16px; margin-bottom: 25px; }
         .w-icon { width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.3); display: flex; justify-content: center; align-items: center; color: var(--text-main); font-weight: 700; box-shadow: 0 0 15px rgba(139, 92, 246, 0.2); }
         .w-icon svg { width: 22px; height: 22px; fill: currentColor; }
@@ -64,33 +66,35 @@
         body.morphing #welcome-preloader { opacity: 0; filter: blur(20px); transform: scale(1.1); pointer-events: none; }
         body.loaded #welcome-preloader { display: none; }
 
-        /* Fix Google Translate UI Perfectly */
+        /* Google Translate UI Fix */
         #google_translate_element { position: absolute; opacity: 0; z-index: -100; pointer-events: none; }
         .goog-te-banner-frame, .skiptranslate > iframe, .goog-te-balloon-frame { display: none !important; }
-        body { top: 0 !important; }
         .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
 
         h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
         
-        .content-wrapper { opacity: 0; filter: blur(30px); transform: scale(0.95); transition: opacity 2s ease, filter 2s ease, transform 2s ease; }
+        /* Halaman & Animasi Ganti Bahasa */
+        .content-wrapper { opacity: 0; filter: blur(30px); transform: scale(0.95); transition: opacity 1.5s ease, filter 1.5s ease, transform 1.5s ease; }
         body.morphing .content-wrapper { opacity: 1; filter: blur(0px); transform: scale(1); }
+        body.lang-changing .content-wrapper { opacity: 0.3; filter: blur(15px) grayscale(50%); transform: scale(0.98); transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 
-        .orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.2; z-index: -1; animation: floatOrb 10s ease-in-out infinite alternate; pointer-events: none; }
+        .orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.15; z-index: -1; animation: floatOrb 10s ease-in-out infinite alternate; pointer-events: none; }
         .orb-1 { width: 40vw; height: 40vw; background: var(--accent); top: -10%; left: -10%; }
         .orb-2 { width: 50vw; height: 50vw; background: #c4b5fd; bottom: -20%; right: -10%; animation-delay: -5s; }
         @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 30px) scale(1.1); } }
 
         /* Navbar */
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(9, 6, 22, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 100; transition: 0.3s; }
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; background: rgba(11, 7, 23, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 100; transition: 0.3s; }
         .brand { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
         .brand img { height: 38px; border-radius: 8px; box-shadow: var(--shadow-soft); }
         .brand span { font-size: 1.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
         .brand dot { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        
         .lang-select { appearance: none; -webkit-appearance: none; background: var(--surface-solid) url("data:image/svg+xml;utf8,<svg fill='%23ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 8px center; background-size: 18px; border: 1px solid var(--border); color: var(--text-main); padding: 8px 32px 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; outline: none; transition: 0.3s; }
         .lang-select:hover { border-color: var(--accent); box-shadow: var(--shadow-soft); }
 
         /* Hero */
-        .hero { min-height: 100vh; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 40px; padding: 120px 8% 60px; position: relative; }
+        .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; padding: 120px 8% 60px; position: relative; }
         .hero-content { z-index: 10; }
         .greeting { font-size: 1.2rem; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; display: block; }
         .typewriter-container { font-size: 4.8rem; font-weight: 800; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; font-family: 'Space Grotesk', sans-serif; min-height: 110px; }
@@ -103,7 +107,7 @@
         .socials { display: flex; gap: 15px; }
         .btn-social { display: flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.95rem; color: #fff; background: rgba(139, 92, 246, 0.1); border: 1px solid var(--border); transition: 0.3s; }
         .btn-social svg { width: 18px; fill: currentColor; }
-        .btn-social:hover { transform: translateY(-3px); background: rgba(139, 92, 246, 0.2); box-shadow: var(--shadow-soft); }
+        .btn-social:hover { transform: translateY(-3px); background: rgba(139, 92, 246, 0.2); box-shadow: var(--shadow-soft); border-color: var(--accent); }
         .btn-primary { background: var(--accent-grad); border: none; }
         .btn-primary:hover { box-shadow: var(--shadow-hover); }
 
@@ -111,8 +115,8 @@
 
         /* Dynamic Quote Section */
         .quote-wrapper { padding: 40px 8%; max-width: 1400px; margin: auto; position: relative; z-index: 10; }
-        .quote-box { background: var(--surface); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; box-shadow: var(--shadow-soft); position: relative; overflow: hidden; }
-        .quote-box::before { content: '"'; position: absolute; top: -20px; left: 20px; font-size: 8rem; color: rgba(139, 92, 246, 0.1); font-family: 'Space Grotesk', sans-serif; pointer-events: none; }
+        .quote-box { background: var(--surface); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
+        .quote-box::before { content: '"'; position: absolute; top: -20px; left: 20px; font-size: 8rem; color: rgba(255, 255, 255, 0.03); font-family: 'Space Grotesk', sans-serif; pointer-events: none; }
         .quote-text { font-size: 1.5rem; font-style: italic; color: var(--text-main); margin-bottom: 15px; font-weight: 500; }
         .quote-author { font-size: 1rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
 
@@ -129,7 +133,7 @@
         .bento-profile::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-grad); }
         .bento-profile img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--surface-solid); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .bento-profile h3 { font-size: 1.6rem; margin-bottom: 5px; }
-        .bento-profile p { color: var(--text-main); font-size: 0.95rem; font-weight: 600; margin-bottom: 25px; background: rgba(139, 92, 246, 0.2); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(139, 92, 246, 0.3); }
+        .bento-profile p { color: #ffffff; font-size: 0.95rem; font-weight: 600; margin-bottom: 25px; background: rgba(139, 92, 246, 0.2); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(139, 92, 246, 0.3); }
         
         .info-list { width: 100%; text-align: left; list-style: none; }
         .info-list li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--border); font-size: 0.95rem; font-weight: 500; }
@@ -138,22 +142,22 @@
 
         .bento-skills { grid-column: span 8; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
         .skill-card { background: var(--surface-solid); border: 1px solid var(--border); padding: 25px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; transition: all 0.3s; position: relative; overflow: hidden; }
-        .skill-card::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background: var(--accent-grad); opacity: 0; transition: 0.3s; }
+        .skill-card::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--accent-grad); opacity: 0; transition: 0.3s; }
         .skill-card:hover { border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 5px 20px rgba(139, 92, 246, 0.15); transform: translateY(-3px); }
         .skill-card:hover::after { opacity: 1; }
         .skill-info h4 { font-size: 1.25rem; margin-bottom: 6px; color: var(--text-main); }
         .skill-info p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
 
-        /* Cards Layout */
+        /* Elegant Dynamic Cards */
         .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; perspective: 1500px; align-items: stretch; }
         .card { background: var(--surface); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 24px; padding: 8px; display: flex; flex-direction: column; position: relative; z-index: 1; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); transform-style: preserve-3d; box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5); overflow: hidden; height: 100%; }
-        .card::before { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 2px; background: linear-gradient(135deg, #a78bfa, #8b5cf6, #c4b5fd); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.5s ease; z-index: -1; pointer-events: none; }
+        .card::before { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 2px; background: linear-gradient(135deg, #c4b5fd, #8b5cf6, #6d28d9); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.5s ease; z-index: -1; pointer-events: none; }
         .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: var(--shadow-hover); background: rgba(30, 25, 60, 0.9); }
         .card:hover::before { opacity: 1; }
 
         .card-inner { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
         .card-img-wrapper { width: 100%; position: relative; overflow: hidden; border-radius: 16px; margin-bottom: 24px; aspect-ratio: 16/9; background: #0b0717; border: 1px solid var(--border); }
-        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0.8; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0.85; }
         .card:hover .card-img { transform: scale(1.08); opacity: 1; }
         
         .card h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Space Grotesk', sans-serif; line-height: 1.3; }
@@ -161,7 +165,7 @@
         
         .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; margin-top: auto; }
         .badge { font-size: 0.75rem; font-weight: 700; background: rgba(139, 92, 246, 0.15); padding: 8px 16px; border-radius: 8px; color: var(--accent-light); border: 1px solid rgba(139, 92, 246, 0.3); }
-        .btn-action { text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid var(--border); transition: 0.4s; }
+        .btn-action { text-decoration: none; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid var(--border); transition: 0.4s; }
         .btn-action.dl { background: var(--accent-grad); border: none; }
         .btn-action:hover { transform: scale(1.05); background: rgba(255,255,255,0.2); }
         .btn-action.dl:hover { box-shadow: var(--shadow-soft); background: var(--accent-grad); }
@@ -213,15 +217,19 @@
     <div class="content-wrapper">
         <nav>
             <div class="brand" onclick="checkAdmin()">
-                <img src="assets/profile.jpg" alt="Logo" onerror="this.src='https://ui-avatars.com/api/?name=A&background=8b5cf6&color=fff'">
+                <img src="assets/profile.jpg" alt="Logo Accang" onerror="this.src='https://ui-avatars.com/api/?name=A&background=8b5cf6&color=fff'">
                 <span>Accang<dot>.</dot></span>
             </div>
             <select class="lang-select" id="langSelect" class="notranslate">
                 <option value="id">Indonesia</option>
                 <option value="en">English</option>
-                <option value="zh-CN">中文</option>
-                <option value="ko">한국어</option>
-                <option value="ja">日本語</option>
+                <option value="zh-CN">中文 (China)</option>
+                <option value="ko">한국어 (Korea)</option>
+                <option value="ja">日本語 (Jepang)</option>
+                <option value="th">ไทย (Thailand)</option>
+                <option value="vi">Tiếng Việt (Vietnam)</option>
+                <option value="km">ភាសាខ្មែរ (Kamboja)</option>
+                <option value="ru">Русский (Rusia)</option>
             </select>
         </nav>
 
@@ -249,7 +257,7 @@
         <div class="quote-wrapper reveal">
             <div class="quote-box">
                 <div class="quote-text" id="quoteText">"Kode yang baik adalah dokumentasinya sendiri."</div>
-                <div class="quote-author" id="quoteAuthor">- Accang</div>
+                <div class="quote-author" id="quoteAuthor">- Chaeril Jaya Putra</div>
             </div>
         </div>
 
@@ -257,7 +265,7 @@
             <h2 class="section-title">Profil & Keahlian</h2>
             <div class="bento-grid">
                 <div class="bento-item bento-profile">
-                    <img src="assets/profile.jpg" alt="Accang" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=171131&color=fff&size=200'">
+                    <img src="assets/profile.jpg" alt="Accang Chaeril Jaya Putra" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=171131&color=fff&size=200'">
                     <h3 class="notranslate">Accang</h3>
                     <p>Lead Developer & Engineer</p>
                     <ul class="info-list">
@@ -302,7 +310,7 @@
                     document.body.classList.add('typing-start'); 
                     setTimeout(typeEffect, 200); 
                 }, 1500); 
-            }, 2300); // Ekstra waktu agar efek mengetik "www.accang..." selesai terlihat
+            }, 2300); // Waktu stay untuk layar welcome
         });
 
         /* === TYPEWRITER EFFECT === */
@@ -326,14 +334,22 @@
             typeTimeout = setTimeout(typeEffect, typeSpeed);
         }
 
-        /* === GOOGLE TRANSLATE FIX === */
+        /* === GANTI BAHASA ANIMASI (FIX) === */
         document.getElementById('langSelect').addEventListener('change', function() {
             let lang = this.value;
             let selectField = document.querySelector(".goog-te-combo");
-            if (selectField) { 
-                selectField.value = lang; 
-                selectField.dispatchEvent(new Event('change')); 
-            }
+            
+            // Animasi blur & fade out sebelum ganti bahasa
+            document.body.classList.add('lang-changing');
+            
+            setTimeout(() => {
+                if (selectField) { 
+                    selectField.value = lang; 
+                    selectField.dispatchEvent(new Event('change')); 
+                }
+                // Kembalikan opacity & hilangkan blur secara halus
+                setTimeout(() => { document.body.classList.remove('lang-changing'); }, 600);
+            }, 500); 
         });
 
         /* === SCROLL REVEAL === */
@@ -345,77 +361,90 @@
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        /* === THREE.JS 3D GALAXY / SOLAR SYSTEM === */
+        /* === THREE.JS 3D FULL REALISTIC SOLAR SYSTEM === */
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.z = 6;
-        camera.position.y = 1.5;
+        camera.position.set(0, 4, 12);
         camera.lookAt(0, 0, 0);
 
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
-        const controls = new OrbitControls(camera, renderer.domElement);
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableZoom = false; controls.enablePan = false; controls.autoRotate = false;
 
-        // The Sun
-        const sunGeo = new THREE.SphereGeometry(0.7, 32, 32);
-        const sunMat = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
+        // The Sun (Glowing Yellow/Orange)
+        const sunGeo = new THREE.SphereGeometry(1.2, 32, 32);
+        const sunMat = new THREE.MeshBasicMaterial({ color: 0xffaa00 });
         const sun = new THREE.Mesh(sunGeo, sunMat);
         scene.add(sun);
 
-        // Core Light inside Sun
-        const sunLight = new THREE.PointLight(0xffdd00, 3, 20);
+        // Core Sun Light
+        const sunLight = new THREE.PointLight(0xffdd66, 4, 50);
         scene.add(sunLight);
-        // Ambient Light
         scene.add(new THREE.AmbientLight(0xffffff, 0.1));
 
-        // Planets
+        // Planets Array
         const planets = [];
-        function createPlanet(size, color, distance, speed) {
+        
+        // Function Generator
+        function createPlanet(size, color, distance, speed, hasRing = false, ringColor = 0xffffff) {
             const geo = new THREE.SphereGeometry(size, 32, 32);
-            const mat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.4 });
+            const mat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.7, metalness: 0.1 });
             const planet = new THREE.Mesh(geo, mat);
             scene.add(planet);
             
-            // Orbit Ring
-            const ringGeo = new THREE.RingGeometry(distance - 0.01, distance + 0.01, 64);
-            const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1, side: THREE.DoubleSide });
-            const orbit = new THREE.Mesh(ringGeo, ringMat);
-            orbit.rotation.x = Math.PI / 2;
-            scene.add(orbit);
+            // Generate Rings if applicable (e.g. Saturn)
+            if(hasRing) {
+                const rGeo = new THREE.RingGeometry(size * 1.5, size * 2.2, 32);
+                const rMat = new THREE.MeshBasicMaterial({ color: ringColor, side: THREE.DoubleSide, transparent: true, opacity: 0.6 });
+                const ring = new THREE.Mesh(rGeo, rMat);
+                ring.rotation.x = Math.PI / 2;
+                planet.add(ring);
+            }
+
+            // Orbit Path
+            const pathGeo = new THREE.RingGeometry(distance - 0.015, distance + 0.015, 64);
+            const pathMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1, side: THREE.DoubleSide });
+            const orbitPath = new THREE.Mesh(pathGeo, pathMat);
+            orbitPath.rotation.x = Math.PI / 2;
+            scene.add(orbitPath);
 
             planets.push({ mesh: planet, distance: distance, speed: speed, angle: Math.random() * Math.PI * 2 });
         }
-        createPlanet(0.08, 0x888888, 1.3, 0.02); // Mercury
-        createPlanet(0.12, 0xe2bf7d, 1.8, 0.015); // Venus
-        createPlanet(0.15, 0x38bdf8, 2.5, 0.01); // Earth
-        createPlanet(0.1, 0xef4444, 3.2, 0.008); // Mars
+        
+        // Full System Implementation
+        createPlanet(0.05, 0x888888, 1.8, 0.02);     // Mercury (Grey)
+        createPlanet(0.09, 0xe2bf7d, 2.4, 0.015);    // Venus (Orange/Brown)
+        createPlanet(0.12, 0x38bdf8, 3.2, 0.01);     // Earth (Blue)
+        createPlanet(0.08, 0xef4444, 3.8, 0.008);    // Mars (Red)
+        createPlanet(0.25, 0xd39c7e, 4.8, 0.005);    // Jupiter (Orangeish)
+        createPlanet(0.20, 0xf6e5c0, 6.0, 0.003, true, 0xe2bf7d); // Saturn (Pale Yellow w/ Rings)
+        createPlanet(0.15, 0x7ed6df, 7.2, 0.002);    // Uranus (Light Blue)
+        createPlanet(0.14, 0x4834d4, 8.2, 0.001);    // Neptune (Dark Blue)
 
-        // Galaxy Stars
+        // Realistic Galaxy Starfield
         const starGeo = new THREE.BufferGeometry();
-        const starCount = 1500;
+        const starCount = 3000;
         const posArray = new Float32Array(starCount * 3);
-        for(let i = 0; i < starCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 15;
-        }
+        for(let i = 0; i < starCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 30; }
         starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const starMat = new THREE.PointsMaterial({ size: 0.015, color: 0xc4b5fd });
+        const starMat = new THREE.PointsMaterial({ size: 0.025, color: 0xffffff, transparent: true, opacity: 0.8 });
         const stars = new THREE.Points(starGeo, starMat);
         scene.add(stars);
 
         function animate() {
             requestAnimationFrame(animate);
             sun.rotation.y += 0.005;
-            stars.rotation.y += 0.0005;
+            stars.rotation.y += 0.0005; // Stars move slightly
 
             planets.forEach(p => {
                 p.angle += p.speed;
                 p.mesh.position.x = Math.cos(p.angle) * p.distance;
                 p.mesh.position.z = Math.sin(p.angle) * p.distance;
-                p.mesh.rotation.y += 0.02;
+                p.mesh.rotation.y += 0.02; // Planet rotates on its own axis
             });
 
             controls.update();
@@ -433,10 +462,12 @@
             if (clks >= 3) { sessionStorage.removeItem('adminClicks'); if(prompt("OVERRIDE. Passkey:") === "accang123") { sessionStorage.setItem("isAdmin", "true"); window.location.href = "kpsksldodudjsksodj.html"; } }
         }
 
-        /* === DATA RENDERING (Cards & Dynamic Quote) === */
+        /* === ROBUST DATA RENDERING (Cards) === */
         async function renderAllCards() {
             try {
-                const response = await fetch('data.json'); if (!response.ok) throw new Error('Network error');
+                // Fetch Data dari JSON
+                const response = await fetch('data.json'); 
+                if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
                 
                 if(data.acc_quote) {
@@ -444,32 +475,53 @@
                     document.getElementById('quoteAuthor').innerText = `- ${data.acc_quote.author}`;
                 }
 
-                renderCards('projectList', data.acc_projects || [], true);
-                renderCards('toolList', data.acc_tools || [], false);
+                const projects = data.acc_projects || [];
+                const tools = data.acc_tools || [];
+                
+                renderCards('projectList', projects, true);
+                renderCards('toolList', tools, false);
             } catch (error) {
-                const err = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; border: 1px dashed var(--border); border-radius: 16px; color: var(--text-muted);">Database Kosong / Error</div>`;
-                document.getElementById('projectList').innerHTML = err; document.getElementById('toolList').innerHTML = err;
+                console.warn("Using fallback data due to fetch error.");
+                // Fallback Data sesuai instruksi agar list tetep works
+                const fallbackProjects = [
+                    { name: "Userbot Telegram Telethon", desc: "Telegram Userbot berbasis Telethon untuk otomatisasi dan kontrol akun.", link: "project/userbottelegramaccang.zip", img: "assets/userbot.jpg" },
+                    { name: "Whatsapp Bot", desc: "WhatsApp Bot berbasis Baileys untuk otomatisasi pesan, manajemen grup, dan fitur utility.", link: "project/whatsappbot.zip", img: "assets/Untitled38_20260414204555.png" }
+                ];
+                const fallbackTools = [
+                    { name: "Tiktok Downloader", desc: "Download video TikTok tanpa watermark, cepat & gratis.", link: "tools/tiktok-dl.html", img: "assets/Untitled37_20260414172803.png" }
+                ];
+                
+                renderCards('projectList', fallbackProjects, true);
+                renderCards('toolList', fallbackTools, false);
             }
         }
 
         function renderCards(id, data, isProject) {
-            if(data.length === 0) return;
-            document.getElementById(id).innerHTML = data.map((item, index) => `
+            const container = document.getElementById(id);
+            if (!container) return;
+
+            if(data.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; border: 1px dashed var(--border); border-radius: 16px; color: var(--text-muted);">Sedang Maintenance...</div>`;
+                return;
+            }
+            
+            container.innerHTML = data.map((item, index) => `
                 <div class="card fade-up" style="transition-delay: ${index * 0.15}s">
                     <div class="card-inner">
                         <div class="card-img-wrapper">
-                            ${item.img ? `<img src="${item.img}" class="card-img">` : `<div class="card-img" style="font-size:3rem; color:#a78bfa; align-items:center; display:flex; justify-content:center;">${item.icon || '/>'}</div>`}
+                            ${item.img ? `<img src="${item.img}" class="card-img" alt="${item.name}">` : `<div class="card-img" style="font-size:3rem; color:#a78bfa; align-items:center; display:flex; justify-content:center;">${item.icon || '/>'}</div>`}
                         </div>
                         <h3 class="notranslate">${item.name}</h3>
                         <p>${item.desc}</p>
                         <div class="card-footer">
                             <span class="badge">${isProject ? "PAKET" : "APLIKASI"}</span>
-                            ${isProject ? `<a href="${item.link}" download="${item.name}.zip" class="btn-action dl">Unduh File</a>` : `<a href="${item.link}" class="btn-action">Akses Web</a>`}
+                            ${isProject ? `<a href="${item.link}" download class="btn-action dl">Unduh File</a>` : `<a href="${item.link}" class="btn-action">Akses Web</a>`}
                         </div>
                     </div>
                 </div>
             `).join('');
         }
+        
         setTimeout(renderAllCards, 500);
     </script>
 </body>

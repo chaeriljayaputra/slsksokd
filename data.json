@@ -1,11 +1,11 @@
 {
   "acc_projects": [
     {
-      "name": "jhs",
-      "desc": "gd",
-      "link": "",
+      "name": "Userbot Telegram Telethon",
+      "desc": "Telegram Userbot berbasis Telethon untuk otomatisasi dan kontrol akun.",
+      "link": "project/userbottelegramaccang.zip",
       "icon": "",
-      "img": ""
+      "img": "assets/userbot.jpg"
     }
   ],
   "acc_tools": []

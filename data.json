@@ -8,5 +8,13 @@
       "img": "assets/userbot.jpg"
     }
   ],
-  "acc_tools": []
+  "acc_tools": [
+    {
+      "name": "Tiktok Downloader",
+      "desc": "Download video TikTok tanpa watermark, cepat & gratis.",
+      "link": "tools/tiktok-dl.html",
+      "icon": "",
+      "img": "assets/Untitled37_20260414172803.png"
+    }
+  ]
 }

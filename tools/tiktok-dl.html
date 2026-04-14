@@ -3,145 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accang | TikTok Downloader</title>
+<title>Accang | TikTok Downloader Premium</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-    --bg: linear-gradient(135deg,#ffffff,#f1f5f9,#e2e8f0);
-    --card: rgba(255,255,255,0.7);
-    --border: rgba(15,23,42,0.08);
-    --text:#0f172a;
-    --muted:#64748b;
-    --accent: linear-gradient(135deg,#38bdf8,#2563eb);
+:root {
+    /* Tema Seragam dengan index.html (Dark Space Premium) */
+    --bg-main: #0b0717;
+    --surface: rgba(30, 25, 60, 0.4);
+    --surface-solid: #171131;
+    --border: rgba(139, 92, 246, 0.2);
+    --text-main: #ffffff;
+    --text-muted: #a78bfa;
+    --accent-light: #c4b5fd;
+    --accent: #8b5cf6;
+    --accent-grad: linear-gradient(135deg, #a78bfa 0%, #6d28d9 100%);
+    --shadow-soft: 0 10px 40px -10px rgba(139, 92, 246, 0.25);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;}
-body{
-    background:var(--bg);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:20px;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
 }
 
-/* animation */
-.fade-up{
-    opacity:0;
-    transform:translateY(20px);
-    animation:fadeUp .6s ease forwards;
+/* Ambient Orbs (Sama dengan index.html) */
+.orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.15; z-index: -1; animation: floatOrb 10s ease-in-out infinite alternate; pointer-events: none; }
+.orb-1 { width: 40vw; height: 40vw; background: var(--accent); top: -10%; left: -10%; }
+.orb-2 { width: 50vw; height: 50vw; background: #c4b5fd; bottom: -20%; right: -10%; animation-delay: -5s; }
+@keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 30px) scale(1.1); } }
+
+/* Animation */
+.fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp .8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes fadeUp{
-    to{opacity:1;transform:translateY(0);}
-}
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
 /* NAV */
-.nav{
-    width:100%;
-    max-width:520px;
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
+.nav {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
-.btn-back{color:#64748b;text-decoration:none;font-weight:600;}
-.btn-back:hover{color:#000}
 
-/* CARD */
-.container{
-    width:100%;
-    max-width:520px;
-    background:var(--card);
-    backdrop-filter:blur(12px);
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:30px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.05);
+.btn-back {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-back:hover { color: var(--text-main); transform: translateX(-5px); }
+
+#lang {
+    background: var(--surface-solid);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* CONTAINER CARD */
+.container {
+    width: 100%;
+    max-width: 520px;
+    background: var(--surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: var(--accent-grad);
 }
 
 /* HEADER */
-h1{
-    text-align:center;
-    font-size:2.4rem;
+h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
 }
-.desc{
-    text-align:center;
-    color:var(--muted);
-    margin-bottom:20px;
+h1 span { color: var(--accent); }
+
+.desc {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    font-weight: 500;
 }
 
-/* INPUT */
-input{
-    width:100%;
-    padding:15px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    margin-bottom:12px;
+/* INPUT & BUTTON */
+input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
 }
 
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:var(--accent);
-    color:#fff;
-    font-weight:600;
-    cursor:pointer;
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: var(--accent-grad);
+    color: #0b0717;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(109, 40, 217, 0.4);
+    filter: brightness(1.1);
 }
 
-/* loader */
-.loader{display:none;text-align:center;margin-top:20px;}
+/* LOADER */
+.loader {
+    display: none;
+    text-align: center;
+    margin-top: 25px;
+    color: var(--accent);
+    font-weight: 600;
+}
 
 /* RESULT */
-.result{display:none;margin-top:20px;}
-.video{
-    display:flex;
-    gap:12px;
-    margin-bottom:15px;
-    position:relative;
-}
-.video img{
-    width:90px;height:90px;border-radius:12px;
+.result { display: none; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 25px; }
+
+.video {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
 }
 
-/* watermark */
-.wm{
-    position:absolute;
-    bottom:5px;
-    left:5px;
-    font-size:10px;
-    background:rgba(0,0,0,0.5);
-    color:#fff;
-    padding:2px 6px;
-    border-radius:5px;
+.thumb-container { position: relative; width: 90px; height: 90px; }
+#thumb { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
+
+.wm-tag {
+    position: absolute; bottom: 4px; left: 4px;
+    font-size: 9px; background: var(--accent);
+    color: #000; padding: 2px 5px; border-radius: 4px; font-weight: 800;
 }
 
-/* buttons */
-.btn-group{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.video-info b { display: block; color: var(--text-main); font-size: 1rem; margin-bottom: 4px; }
+.video-info small { color: var(--text-muted); font-size: 0.85rem; }
+
+/* BUTTON GROUP */
+.btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.btn-dl {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
 }
-.btn-dl{
-    padding:13px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    background:#fff;
-    cursor:pointer;
-    text-align:center;
-    font-weight:600;
-    transition:.3s;
+.btn-dl:hover {
+    background: var(--surface-solid);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(1.02);
 }
-.btn-dl:hover{
-    background:#0ea5e9;
-    color:#fff;
+.btn-dl.primary {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+@media (max-width: 480px) {
+    .btn-group { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
 }
 </style>
 </head>
 
 <body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
 <div class="nav fade-up">
     <a href="../index.html" class="btn-back" id="backBtn">← Kembali</a>
@@ -157,20 +244,27 @@ button{
 </div>
 
 <div class="container fade-up">
-    <h1>Accang.</h1>
+    <h1>Accang<span>.</span></h1>
     <p class="desc" id="desc">TikTok Downloader Premium</p>
 
     <input id="url" placeholder="Tempel link TikTok...">
-    <button onclick="getData()" id="btn">Download</button>
+    <button onclick="getData()" id="btn">Mulai Download</button>
 
-    <div class="loader" id="loader">Loading...</div>
+    <div class="loader" id="loader">
+        <svg width="24" height="24" viewBox="0 0 24 24" style="animation: spin 1s linear infinite; margin-bottom: 8px;">
+            <path fill="currentColor" d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"/>
+        </svg>
+        <br>Memproses...
+    </div>
 
     <div class="result" id="result">
         <div class="video">
-            <img id="thumb">
-            <div class="wm">Accang.</div>
-            <div>
-                <b id="title"></b><br>
+            <div class="thumb-container">
+                <img id="thumb">
+                <div class="wm-tag">ACCANG</div>
+            </div>
+            <div class="video-info">
+                <b id="title"></b>
                 <small id="author"></small>
             </div>
         </div>
@@ -178,24 +272,28 @@ button{
         <div class="btn-group">
             <div class="btn-dl" onclick="dl('wm')">📱 Watermark</div>
             <div class="btn-dl" onclick="dl('no')">🎬 No Watermark</div>
-            <div class="btn-dl" onclick="dlHD()">🔥 No WM HD</div>
-            <div class="btn-dl" onclick="dl('mp3')">🎵 MP3</div>
+            <div class="btn-dl primary" onclick="dlHD()">🔥 High Quality</div>
+            <div class="btn-dl" onclick="dl('mp3')">🎵 Audio MP3</div>
         </div>
     </div>
 </div>
 
+<style>
+@keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
+</style>
+
 <script>
 let dataGlobal=null;
 
-/* FULL LANGUAGE */
+/* FULL LANGUAGE SUPPORT */
 const langData={
-id:{desc:"TikTok Downloader Premium",back:"← Kembali",btn:"Download"},
-en:{desc:"Premium TikTok Downloader",back:"← Back",btn:"Download"},
-zh:{desc:"抖音下载器",back:"← 返回",btn:"下载"},
+id:{desc:"TikTok Downloader Premium",back:"← Kembali",btn:"Mulai Download"},
+en:{desc:"Premium TikTok Downloader",back:"← Back",btn:"Download Now"},
+zh:{desc:"抖音下载器",back:"← 返回",btn:"开始下载"},
 ko:{desc:"틱톡 다운로드",back:"← 뒤로",btn:"다운로드"},
 ja:{desc:"TikTokダウンローダー",back:"← 戻る",btn:"ダウンロード"},
-vi:{desc:"Tải TikTok",back:"← Quay lại",btn:"Tải"},
-km:{desc:"ទាញ TikTok",back:"← ត្រឡប់",btn:"ទាញ"}
+vi:{desc:"Tải TikTok Premium",back:"← Quay lại",btn:"Tải ngay"},
+km:{desc:"ទាញ TikTok Premium",back:"← ត្រឡប់",btn:"ទាញយក"}
 };
 
 document.getElementById("lang").onchange=(e)=>{
@@ -205,11 +303,13 @@ document.getElementById("lang").onchange=(e)=>{
     document.getElementById("btn").innerText=l.btn;
 };
 
-/* FETCH */
+/* FETCH DATA */
 async function getData(){
     let url=document.getElementById("url").value;
     let loader=document.getElementById("loader");
     let result=document.getElementById("result");
+
+    if(!url) return alert("Masukkan link!");
 
     loader.style.display="block";
     result.style.display="none";
@@ -218,21 +318,23 @@ async function getData(){
         let res=await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
         let json=await res.json();
 
+        if(json.code !== 0) throw new Error();
+
         dataGlobal=json.data;
 
-        thumb.src=dataGlobal.cover;
-        title.innerText=dataGlobal.title;
-        author.innerText="@"+dataGlobal.author.unique_id;
+        document.getElementById("thumb").src=dataGlobal.cover;
+        document.getElementById("title").innerText=dataGlobal.title || "TikTok Video";
+        document.getElementById("author").innerText="@"+dataGlobal.author.unique_id;
 
         loader.style.display="none";
         result.style.display="block";
     }catch{
-        alert("Error");
+        alert("Gagal memuat video. Pastikan link valid.");
         loader.style.display="none";
     }
 }
 
-/* FORCE DOWNLOAD */
+/* FORCE DOWNLOAD LOGIC */
 function forceDownload(url,name){
     fetch(url)
     .then(res=>res.blob())
@@ -240,24 +342,26 @@ function forceDownload(url,name){
         let a=document.createElement("a");
         a.href=URL.createObjectURL(blob);
         a.download=name;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
     });
 }
 
 function dl(type){
     let link="";
-    if(type==="wm") link=dataGlobal.wmplay;
-    if(type==="no") link=dataGlobal.play;
-    if(type==="mp3") link=dataGlobal.music;
+    if(type===\"wm\") link=dataGlobal.wmplay;
+    if(type===\"no\") link=dataGlobal.play;
+    if(type===\"mp3\") link=dataGlobal.music;
 
-    forceDownload(link,"accang_file");
+    forceDownload(link,`accang_tiktok_${type}`);
 }
 
-/* HD + FOLLOW */
+/* HD + REDIRECT */
 function dlHD(){
     window.open("https://www.tiktok.com/@wshzu","_blank");
     setTimeout(()=>{
-        forceDownload(dataGlobal.hdplay || dataGlobal.play,"accang_hd");
+        forceDownload(dataGlobal.hdplay || dataGlobal.play,"accang_tiktok_hd");
     },1500);
 }
 </script>

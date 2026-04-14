@@ -6,6 +6,13 @@
       "link": "project/userbottelegramaccang.zip",
       "icon": "",
       "img": "assets/userbot.jpg"
+    },
+    {
+      "name": "Whatsapp Bot",
+      "desc": "WhatsApp Bot berbasis Baileys untuk otomatisasi pesan, manajemen grup, dan fitur utility.",
+      "link": "project/whatsappbot.zip",
+      "icon": "",
+      "img": "assets/Untitled38_20260414204555.png"
     }
   ],
   "acc_tools": [

@@ -206,18 +206,29 @@
             .tl-dot { left: 20px; }
             .tl-card { max-width: 100%; }
         }
-
-        /* === TESTIMONIAL SECTION === */
-        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .testi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; transition: 0.3s; position: relative; overflow: hidden; }
-        .testi-card::before { content: '"'; position: absolute; top: -10px; right: 20px; font-size: 6rem; color: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; line-height: 1; pointer-events: none; }
-        .testi-card:hover { border-color: rgba(139,92,246,0.4); box-shadow: var(--shadow-soft); transform: translateY(-4px); }
-        .testi-stars { color: #f59e0b; font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
-        .testi-text { font-size: 0.97rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
-        .testi-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--border); padding-top: 16px; }
-        .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent-grad); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; color: #fff; flex-shrink: 0; }
-        .testi-name { font-weight: 700; font-size: 0.95rem; color: var(--text-main); }
-        .testi-role { font-size: 0.8rem; color: var(--text-muted); }
+/* Testimonial card style (glass + subtle) */
+.testi-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(139,92,246,0.12);
+  padding: 20px;
+  border-radius: 14px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  box-shadow: 0 6px 24px rgba(11,7,23,0.4);
+}
+.testi-avatar {
+  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  flex-shrink:0;font-size:18px;
+}
+.testi-meta { display:flex; flex-direction:column; gap:6px; }
+.testi-name { font-weight:700; color:var(--text-main); }
+.testi-date { font-size:0.82rem; color:var(--text-muted); }
+.testi-message { margin-top:8px; color:var(--text-muted); line-height:1.6; }
+.testi-actions { margin-left:auto; display:flex; gap:8px; align-items:center; }
+.btn-admin { background:transparent; border:1px solid rgba(139,92,246,0.14); color:var(--accent); padding:6px 10px;border-radius:8px; cursor:pointer; font-weight:600; }
+.admin-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:100000; }
+.admin-panel { width:95%; max-width:920px; background:var(--surface); border-radius:12px; padding:18px; border:1px solid rgba(139,92,246,0.12); box-shadow:0 30px 60px rgba(11,7,23,0.7); }
 
         /* === CONTACT SECTION === */
         .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
@@ -417,37 +428,32 @@
                 </div>
             </div>
         </div>
+        
+<!-- TESTIMONIALS (REPLACEMENT) -->
+<div class="section reveal" id="testimonials-section">
+  <h2 class="section-title">Testimoni</h2>
 
-        <!-- TESTIMONIAL SECTION -->
-        <div class="section reveal">
-            <h2 class="section-title">Testimoni</h2>
-            <div class="testi-grid">
-                <div class="testi-card">
-                    <div class="testi-stars">★★★★★</div>
-                    <p class="testi-text">"Accang sangat profesional dan hasilnya melebihi ekspektasi. Bot WhatsApp yang dia buat berjalan sempurna dan responsif. Highly recommended!"</p>
-                    <div class="testi-author">
-                        <div class="testi-avatar">R</div>
-                        <div><div class="testi-name">Rizky A.</div><div class="testi-role">Owner Bisnis Online</div></div>
-                    </div>
-                </div>
-                <div class="testi-card">
-                    <div class="testi-stars">★★★★★</div>
-                    <p class="testi-text">"Sistem Telegram bot yang dibangun Accang sangat stabil. Pengerjaan cepat, komunikasi lancar, dan hasilnya clean. Puas banget!"</p>
-                    <div class="testi-author">
-                        <div class="testi-avatar">F</div>
-                        <div><div class="testi-name">Fajar S.</div><div class="testi-role">Developer & Freelancer</div></div>
-                    </div>
-                </div>
-                <div class="testi-card">
-                    <div class="testi-stars">★★★★★</div>
-                    <p class="testi-text">"Portofolio dan hasil kerjanya luar biasa untuk usianya. Accang punya skill yang jarang dimiliki developer seusianya. Salut!"</p>
-                    <div class="testi-author">
-                        <div class="testi-avatar">D</div>
-                        <div><div class="testi-name">Dika P.</div><div class="testi-role">Tech Enthusiast</div></div>
-                    </div>
-                </div>
-            </div>
+  <div class="testi-container" style="display:grid; gap:28px;">
+    <!-- Submit Card -->
+    <div class="card testi-submit-card" style="padding:20px;">
+      <div class="card-inner" style="display:flex; gap:16px; align-items:flex-start;">
+        <div style="flex:1">
+          <h3 style="margin:0 0 8px 0;">Kirim Testimoni (Anonim)</h3>
+          <p style="margin:0 0 12px 0; color:var(--text-muted);">Beri tahu pengalamanmu. Nama tidak wajib — bisa anonim.</p>
+          <input id="testiName" placeholder="Nama (opsional)" style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(139,92,246,0.12); margin-bottom:10px; background:var(--surface-solid); color:var(--text-main);">
+          <textarea id="testiMsg" rows="3" placeholder="Tulis testimoni..." style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(139,92,246,0.12); background:var(--surface-solid); color:var(--text-main);"></textarea>
+          <div style="margin-top:12px; display:flex; gap:10px;">
+            <button id="testiSend" class="btn-primary btn-action" style="padding:10px 16px;">Kirim</button>
+            <div id="testiStatus" style="align-self:center;color:var(--text-muted);font-size:0.95rem"></div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- List -->
+    <div id="testiList" class="proj-grid"></div>
+  </div>
+</div>
 
         <!-- PROJECTS & TOOLS -->
         <div class="section reveal"><h2 class="section-title">Arsip Eksklusif</h2><div class="proj-grid" id="projectList"></div></div>
@@ -672,10 +678,207 @@
             window.open(`https://wa.me/6285137027046?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        function checkAdmin() {
-            let clks = parseInt(sessionStorage.getItem('adminClicks') || 0) + 1; sessionStorage.setItem('adminClicks', clks);
-            if (clks >= 3) { sessionStorage.removeItem('adminClicks'); if(prompt("OVERRIDE. Passkey:") === "accang123") { sessionStorage.setItem("isAdmin", "true"); window.location.href = "kpsksldodudjsksodj.html"; } }
+// Testimonials frontend: fetch, submit, admin overlay + footer hold trigger
+(function(){
+  const apiBase = '/api/testimonials';
+  let adminPass = null; // in-memory only
+  let isAdmin = false;
+
+  const listEl = document.getElementById('testiList');
+  const statusEl = document.getElementById('testiStatus');
+  const nameEl = document.getElementById('testiName');
+  const msgEl = document.getElementById('testiMsg');
+  const sendBtn = document.getElementById('testiSend');
+  const footer = document.querySelector('footer');
+
+  function fmtDate(iso) {
+    try { return new Date(iso).toLocaleString('id-ID', { dateStyle:'medium', timeStyle:'short' }); }
+    catch(e){ return iso; }
+  }
+
+  async function fetchList() {
+    listEl.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted)">Memuat testimoni...</div>';
+    try {
+      const r = await fetch(apiBase);
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || 'fail');
+      renderList(j.data || []);
+    } catch (err) {
+      listEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text-muted)">Gagal memuat testimoni. Coba lagi nanti.</div>`;
+      console.warn(err);
+    }
+  }
+
+  function avatarInitial(name) {
+    const nm = (name || 'Anon').trim();
+    const parts = nm.split(/\s+/);
+    return (parts[0] ? parts[0][0] : 'A').toUpperCase();
+  }
+
+  function renderList(items) {
+    if (!items || items.length === 0) {
+      listEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:24px;border:1px dashed rgba(139,92,246,0.08);border-radius:12px">Belum ada testimoni. Jadilah yang pertama!</div>`;
+      return;
+    }
+    listEl.innerHTML = items.map(item => `
+      <div class="card testi-card" style="grid-column: span 6;">
+        <div class="testi-avatar">${avatarInitial(item.name)}</div>
+        <div style="flex:1">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div class="testi-meta">
+              <div class="testi-name">${escapeHtml(item.name || 'Anonim')}</div>
+              <div class="testi-date">${fmtDate(item.created_at)}</div>
+            </div>
+            <div style="margin-left:auto" class="testi-actions">
+              ${isAdmin ? `<button class="btn-admin" data-action="edit" data-id="${item.id}">Edit</button>
+              <button class="btn-admin" data-action="delete" data-id="${item.id}">Hapus</button>` : ''}
+            </div>
+          </div>
+          <div class="testi-message">${escapeHtml(item.message)}</div>
+        </div>
+      </div>
+    `).join('');
+    // attach events for admin buttons
+    if (isAdmin) {
+      document.querySelectorAll('.btn-admin').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const id = btn.getAttribute('data-id');
+          const action = btn.getAttribute('data-action');
+          if (action === 'delete') {
+            if (!confirm('Hapus testimoni ini?')) return;
+            await deleteTesti(id);
+          } else if (action === 'edit') {
+            const oldMsg = prompt('Edit pesan testimoni:', '');
+            if (oldMsg === null) return;
+            const newName = prompt('Edit nama (kosong = tetap):', '');
+            await editTesti(id, newName || undefined, oldMsg);
+          }
+        });
+      });
+    }
+  }
+
+  function escapeHtml(s = '') {
+    return s.replace?.(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') || s;
+  }
+
+  async function submitTesti() {
+    const name = nameEl.value.trim();
+    const message = msgEl.value.trim();
+    if (!message) { statusEl.textContent = 'Mohon isi pesan testimoni.'; return; }
+    sendBtn.disabled = true; statusEl.textContent = 'Mengirim...';
+    try {
+      const r = await fetch(apiBase, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name || 'Anonim', message }),
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || 'gagal');
+      statusEl.textContent = 'Terima kasih! Testimoni dikirim.';
+      nameEl.value = ''; msgEl.value = '';
+      setTimeout(() => { statusEl.textContent = ''; }, 3000);
+      fetchList();
+    } catch (err) {
+      statusEl.textContent = 'Gagal mengirim (server).';
+      console.warn(err);
+    } finally { sendBtn.disabled = false; }
+  }
+
+  async function verifyAdmin(pass) {
+    try {
+      const r = await fetch(apiBase + '/verify', {
+        method: 'POST',
+        headers: { 'x-admin-pass': pass }
+      });
+      const j = await r.json();
+      return j.ok;
+    } catch(e) { return false; }
+  }
+
+  async function deleteTesti(id) {
+    try {
+      const r = await fetch(`${apiBase}?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-pass': adminPass || '' }
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || 'delete failed');
+      fetchList();
+      alert('Terhapus');
+    } catch (err) {
+      alert('Gagal hapus. Pastikan admin pass benar dan env GITHUB_TOKEN tersedia.');
+      console.warn(err);
+    }
+  }
+
+  async function editTesti(id, name, message) {
+    try {
+      const r = await fetch(`${apiBase}?id=${encodeURIComponent(id)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-pass': adminPass || ''
+        },
+        body: JSON.stringify({ name, message })
+      });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || 'edit failed');
+      fetchList();
+      alert('Berhasil diubah');
+    } catch (err) {
+      alert('Gagal edit. Pastikan admin pass benar dan env GITHUB_TOKEN tersedia.');
+      console.warn(err);
+    }
+  }
+
+  // Footer hold trigger for admin (hold ~900ms)
+  (function setupFooterHold(){
+    if (!footer) return;
+    let timer = null;
+    const holdTime = 900;
+    const start = () => {
+      timer = setTimeout(async () => {
+        // prompt for password (keamanan: only in session memory)
+        const pass = prompt('Masukkan password admin:');
+        if (!pass) return;
+        const ok = await verifyAdmin(pass);
+        if (ok) {
+          adminPass = pass;
+          isAdmin = true;
+          sessionStorage.setItem('isAdmin', '1'); // only flag, not storing password
+          alert('Admin mode aktif');
+          fetchList();
+        } else {
+          alert('Password salah');
         }
+      }, holdTime);
+    };
+    const stop = () => { if (timer) clearTimeout(timer); timer = null; };
+    footer.addEventListener('mousedown', start);
+    footer.addEventListener('touchstart', start);
+    footer.addEventListener('mouseup', stop);
+    footer.addEventListener('mouseleave', stop);
+    footer.addEventListener('touchend', stop);
+  })();
+
+  sendBtn.addEventListener('click', submitTesti);
+
+  // restore isAdmin flag (password not stored)
+  if (sessionStorage.getItem('isAdmin')) {
+    // will ask password again if needed; try quick verify with empty -> show prompt
+    (async () => {
+      const p = prompt('Masukkan password admin untuk melanjutkan:');
+      if (p) {
+        const ok = await verifyAdmin(p);
+        if (ok) { adminPass = p; isAdmin = true; fetchList(); }
+        else { sessionStorage.removeItem('isAdmin'); }
+      } else { sessionStorage.removeItem('isAdmin'); }
+    })();
+  } else {
+    fetchList();
+  }
+})();
 
         /* === ROBUST DATA RENDERING (Cards) === */
         async function renderAllCards() {

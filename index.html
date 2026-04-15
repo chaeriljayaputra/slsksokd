@@ -207,18 +207,6 @@
             .tl-card { max-width: 100%; }
         }
 
-        /* === TESTIMONIAL SECTION === */
-        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .testi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; transition: 0.3s; position: relative; overflow: hidden; }
-        .testi-card::before { content: '"'; position: absolute; top: -10px; right: 20px; font-size: 6rem; color: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; line-height: 1; pointer-events: none; }
-        .testi-card:hover { border-color: rgba(139,92,246,0.4); box-shadow: var(--shadow-soft); transform: translateY(-4px); }
-        .testi-stars { color: #f59e0b; font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
-        .testi-text { font-size: 0.97rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
-        .testi-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--border); padding-top: 16px; }
-        .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent-grad); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; color: #fff; flex-shrink: 0; }
-        .testi-name { font-weight: 700; font-size: 0.95rem; color: var(--text-main); }
-        .testi-role { font-size: 0.8rem; color: var(--text-muted); }
-
         /* === CONTACT SECTION === */
         .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
         .contact-info h3 { font-size: 1.6rem; margin-bottom: 16px; color: var(--text-main); }
@@ -361,7 +349,7 @@
             <h2 class="section-title">Tentang Saya</h2>
             <div class="about-grid">
                 <div class="about-text">
-                    <h3>Halo, Saya <span style="color:var(--accent)">Accang</span> 👋</h3>
+                    <h3>Halo, Saya <span style="color:var(--accent)">Accang</span> </h3>
                     <p>Saya adalah seorang developer muda dari Indonesia dengan <span class="highlight">3+ tahun pengalaman</span> membangun sistem digital — mulai dari bot otomasi, web app, hingga arsitektur berbasis AI.</p>
                     <p>Saya menyukai coding karena saya percaya bahwa di masa depan, <span class="highlight">hampir semua hal bisa dibangun dan digantikan oleh teknologi</span>. Coding memberi saya kemampuan untuk menciptakan, mengontrol, dan mengembangkan sesuatu dari nol.</p>
                     <p>Bagi saya, <span class="highlight">coding bukan sekadar skill</span> — tapi alat untuk membentuk masa depan.</p>
@@ -372,7 +360,7 @@
                     </div>
                 </div>
                 <div class="about-passion">
-                    <div class="passion-icon">💡</div>
+                    <div class="passion-icon"></div>
                     <blockquote>"Coding memberi saya kemampuan untuk menciptakan, mengontrol, dan mengembangkan sesuatu dari nol. Bagi saya, coding bukan sekadar skill — tapi alat untuk membentuk masa depan."</blockquote>
                     <p style="margin-top:24px; color:var(--text-muted); font-size:0.9rem;">— Accang</p>
                 </div>
@@ -418,37 +406,6 @@
             </div>
         </div>
 
-        <!-- TESTIMONIAL SECTION -->
-        <div class="section reveal">
-            <h2 class="section-title">Testimoni</h2>
-            <div class="testi-grid">
-                <div class="testi-card">
-                    <div class="testi-stars">★★★★★</div>
-                    <p class="testi-text">"Accang sangat profesional dan hasilnya melebihi ekspektasi. Bot WhatsApp yang dia buat berjalan sempurna dan responsif. Highly recommended!"</p>
-                    <div class="testi-author">
-                        <div class="testi-avatar">R</div>
-                        <div><div class="testi-name">Rizky A.</div><div class="testi-role">Owner Bisnis Online</div></div>
-                    </div>
-                </div>
-                <div class="testi-card">
-                    <div class="testi-stars">★★★★★</div>
-                    <p class="testi-text">"Sistem Telegram bot yang dibangun Accang sangat stabil. Pengerjaan cepat, komunikasi lancar, dan hasilnya clean. Puas banget!"</p>
-                    <div class="testi-author">
-                        <div class="testi-avatar">F</div>
-                        <div><div class="testi-name">Fajar S.</div><div class="testi-role">Developer & Freelancer</div></div>
-                    </div>
-                </div>
-                <div class="testi-card">
-                    <div class="testi-stars">★★★★★</div>
-                    <p class="testi-text">"Portofolio dan hasil kerjanya luar biasa untuk usianya. Accang punya skill yang jarang dimiliki developer seusianya. Salut!"</p>
-                    <div class="testi-author">
-                        <div class="testi-avatar">D</div>
-                        <div><div class="testi-name">Dika P.</div><div class="testi-role">Tech Enthusiast</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- PROJECTS & TOOLS -->
         <div class="section reveal"><h2 class="section-title">Arsip Eksklusif</h2><div class="proj-grid" id="projectList"></div></div>
         <div class="section reveal" style="padding-top: 0;"><h2 class="section-title">Layanan Sistem</h2><div class="proj-grid" id="toolList"></div></div>
@@ -458,7 +415,7 @@
             <h2 class="section-title">Hubungi Saya</h2>
             <div class="contact-wrapper">
                 <div class="contact-info">
-                    <h3>Mari Berkolaborasi 🚀</h3>
+                    <h3>Mari Berkolaborasi </h3>
                     <p>Punya proyek menarik? Butuh bot, web app, atau sistem otomasi? Saya siap membantu mewujudkan ide kamu menjadi kenyataan digital.</p>
                     <div class="contact-links">
                         <a href="https://wa.me/6285137027046" target="_blank" class="contact-link">
@@ -476,7 +433,7 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <h3>Kirim Pesan 💬</h3>
+                    <h3>Kirim Pesan </h3>
                     <div class="form-group">
                         <label>Nama Kamu</label>
                         <input type="text" id="contactName" placeholder="Masukkan nama kamu...">
@@ -495,7 +452,7 @@
 
         <!-- FOOTER -->
         <footer style="text-align:center; padding: 40px 8%; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; margin-top: 20px;">
-            <p style="margin-bottom:8px;">Dibuat dengan ❤️ oleh <span style="color:var(--accent);font-weight:700">Accang</span></p>
+            <p style="margin-bottom:8px;">Dibuat dengan hati oleh <span style="color:var(--accent);font-weight:700">Accang</span></p>
             <p style="font-size:0.8rem; opacity:0.6;">© 2025 Accang — All Rights Reserved</p>
         </footer>
     </div>

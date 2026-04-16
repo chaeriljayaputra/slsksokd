@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Protected Content</title>
+    <style>
+        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        #htmlRendererFrame { width: 100vw; height: 100vh; border: none; display: none; }
+        .loading { font-size: 1.2rem; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <div id="loading">ENCRYPTED BY LONNIE BOT...</div>
+    <iframe id="htmlRendererFrame"></iframe>
+
+    <script>
+        (function() {
+            const encryptedData = "cG4KAQoRBhIKdDcnKC9sT2gkOyMiaSk+LChpfTohYWxPaCQqLyp3T2MvKiA+cyYrMzcnKTtzbBwRGW93dmFZeS43MTVsIS8jLHh9NCYxKCMqMSZndC8gIDosKyt/bSM2NzErbyExOiYtK2QyNiY7PHNzLC07MT0tI2M9KiQzJ3JlcWNnfVh5ICU7Iit3BDwhLjo4czljESA6OD0vImkWJjE7MTJvajc7MTgpcURyJSwxKW88LTYjfnAtIDg/PXRmajktISAsfSIsPSI4KS4+JzprPC0iezwgNnFtIzUhJiI3dAwxNiomZSQiKyYFYHx/dXh5dWR1f2R5NywwIik1NXI9OSg1fWI9MTNuZzAmPDgpPCYrLDF9fEVoLCc8Lzd7XnY9ISE9PnJvLTNlcHUiYiRkL3RjYzowLSQuNzppZnJgdGZ9eXVjZCcwMCsxLWlmcWV3Y34udWNkNS0rIjUtKn9gYHBifyosdWRoKyc3IGVwI3c0cTJ5dGNjJDArJytufDJ0ImMkNXcyRGQyKD4wKD0xaXV4IiQwKCYgKXN1ZCAgLHIgLDk7KzN2LSE8LSAtby07J2gjLDwxeSouIyclPGVlBjorNjdkfjY1IjxjPSw3NiR0KVUxKicrPjYtLCUpOyoqLCtuKTI3a39oNitmdS0mKTAwdSI+IW1ufzExNDtndS0sLDIjNSZpIy83PW8xRWA9ICE6IC4mJCQsJyYtbn55fj4xfj0jLD84ISo2PCFuOi48ZmRoLDc9Mj4wIGppNTUoKycgLn9scj8sZDEqMTYgJmE9JykhMWVzPyx/ICovOyF0Oi48ZmRoPS09MDohbHgvT3ouPS8gLT45LSEgciQgKjUtIHZ4fn5yKD4wKD0xficsJjE7IXV9fjk9ZD9Fej0nK24+KjMjOjo1JCQtJSY6cicqM2h3ZDw3dT4oITsrITNlYnUzKn42Iz0qKzt/bjI3dCw8KSo2ZSYpK3UtJikwMHUmOjd+Nzc9IGEuIicuK2UhKjorNjd4MTAmPyA8dDkqNiw7MS1oOEl8KDUlITUoJSAneH5vLzIhJzsrM3Z7fj4xfiJIYSQ+PSAvKSc1LyQpPCYwMSZ1Ij4hbW5/NiE+KS8tLGxkMi4wOzorJGh3YTw3dSwmNzsnPXktMiEqJzZufX8+NnIoPjAoPTF+JywmMTshdXx+OT1kICAmOzY3eWM1LGw8ISIgIX80LiZ3fmghPTcwKT1ndTRPNiw/ISt/NiY+IDc4YzorMTE+MCo1JCQsJyYtbn1/fmtyNT4mKz0xNH9yYDUsdyIvPC4sMW8tOysnKi5odGY8N3UsKCY0JT07Kj0heXF1ZHx0LCE7ITowdWUvK2UwPSk9KG84Lzttcm8tOy03IDF7fjcjIyE8c2Y5JClvPTw3Jzc3eT4uKic8NmV0PyxkLk8hJzEgIyE1PighOyshM2VidzMqfjYjPSorO38xLSExZDEkIDkiJiM6ICpzZjkkKW88PCksIH93fH9+dSsqLSYqJnIhJCc7MCd2eT42ciYqMDw7LWk1LDsrICk9dW4vKjE2YiM6OiIrJn90en9+dTRPcSEuJjsoJywgITE+dX8+MWUsLSM9O3MzIiBteWEtITwtIC1rdCQ+NyEqPCJufXo+NnInMDArMS1+NyI2LCE/dX9+OT1kLy4mODorbjAqIDggI3R4dS86dDA2IDUvMzxuKiMrNnIvKjE7PTkqaCA9KyApITp0OjU+ISp5PTYxNDcgOncuIicuK3IrOzEyIH8gNysgKT11M0NrPiE7PTA9NmMwMCA4ICA1JCQtJSY6cj8gJSZ/YTw3dT4oITsrITNlZTU7cnRkPDd1LCY3Oyc9bjE8KyZpJiE+PCE8czUwKyEgOiF+IT03MCk9YzwoITY3PG5pIz14L096KSsnOjInPiEkMy08MC02f3d+enh9LCdkISA4MCF/YDQjMncyRGAtIDMnOzEkMSQgOSImIzogKnNmOiR7YGtnfiA9KTs+dW0oLyNkP0V6PScrbjUgOik9LzosZSRiLTU8OCIxPTA6KHVubXh1PXt3ZWRzJiw+KiZ2bzkmIDE6eW8jNjcxK2hlZXx/a3VpKD4wKD0xfjEsIn90fXo+NnJlIkhzeywnPC83e15wYCYrKCFhSHM2MDc8fVhPaCgmOG4qKT4xPGl9ICwnNyc1Pm1wRHUhNjRvNzMyNjBvZzY+LiAqa3sMOzwgOj5lDjMrNSsqPHJmITY0cV5jNyw1ciY4LTw9c2snKyxiODA0KjYmZ3QjIS0iICY0f204MDQqNiZtfW5xAiEuKio2c3s7OjN9WHl7KCY4cENPYyYmIn8wKSIhNmluIi8nJ2dhSHMwNiVlID4kJz9ybD4oKzoubWpVby1xbBE1IS0vJmlqfwcrPStzASIm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";
+            const key = "LONNIE_BOT_SECRET";
+            
+            function decrypt(data, key) {
+                let binary = atob(data);
+                let bytes = new Uint8Array(binary.length);
+                for (let i = 0; i < binary.length; i++) {
+                    bytes[i] = binary.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                }
+                return new TextDecoder().decode(bytes);
+            }
+
+            try {
+                const decrypted = decrypt(encryptedData, key);
+                const frame = document.getElementById('htmlRendererFrame');
+                const doc = frame.contentDocument || frame.contentWindow.document;
+                doc.open();
+                doc.write(decrypted);
+                doc.close();
+                
+                document.getElementById('loading').style.display = 'none';
+                frame.style.display = 'block';
+            } catch (e) {
+                document.getElementById('loading').innerText = "ERROR: Unauthorized Access.";
+            }
+            
+            // Anti View-Source & Inspect
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.onkeydown = (e) => {
+                if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false;
+            };
+        })();
+    </script>
+</body>
+</html>

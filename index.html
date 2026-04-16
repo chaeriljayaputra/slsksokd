@@ -1,14 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="id" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Protected Content</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Accang | Personal Portofolio</title>
+    <meta name="title" content="Accang | Personal Portofolio">
+    <meta name="description" content="Portofolio resmi Accang. Menampilkan karya, proyek, dan keahlian terbaik di bidang teknologi dan desain.">
+    <meta name="keywords" content="Accang, Portofolio Accang, Web Developer, Software Engineer, Accang Vercel, Projek Accang">
+    <meta name="author" content="Accang">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://accang.vercel.app/">
+    <meta property="og:title" content="Accang | Personal Portofolio">
+    <meta property="og:description" content="Eksplorasi proyek dan perjalanan profesional Accang di portofolio digital terbaru.">
+    <meta property="og:image" content="https://accang.vercel.app/assets/profile.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://accang.vercel.app/">
+    <meta property="twitter:title" content="Accang | Personal Portofolio">
+    <meta property="twitter:description" content="Eksplorasi proyek dan perjalanan profesional Accang di portofolio digital terbaru.">
+    <meta property="twitter:image" content="https://accang.vercel.app/assets/profile.jpg">
+
+    <link rel="canonical" href="https://accang.vercel.app/">
+
+    <link rel="icon" type="image/jpg" href="assets/profile.jpg">
+
     <style>
-        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
         #htmlRendererFrame { width: 100vw; height: 100vh; border: none; display: none; }
-        .loading { font-size: 1.2rem; letter-spacing: 2px; }
+        .loading { font-size: 1.2rem; letter-spacing: 2px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
     </style>
 </head>
+<body>
+    <div class="loading">LOADING PORTOFOLIO...</div>
+    <iframe id="htmlRendererFrame" src="about:blank"></iframe>
+
+    <script>
+        // Simulasi inisialisasi aplikasi
+        window.onload = () => {
+            document.querySelector('.loading').style.display = 'none';
+            const frame = document.getElementById('htmlRendererFrame');
+            frame.style.display = 'block';
+        };
+    </script>
+</body>
 <body>
     <div id="loading">ENCRYPTED BY LONNIE BOT...</div>
     <iframe id="htmlRendererFrame"></iframe>

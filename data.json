@@ -29,6 +29,13 @@
       "link": "tools/encrypt-file.html",
       "icon": "",
       "img": "assets/Untitled43_20260416211339.png"
+    },
+    {
+      "name": "Web2Zip",
+      "desc": "Web2Zip ini gunanya untuk mengunduh seluruh isi website melalui satu URL dan membungkusnya menjadi file ZIP secara otomatis.",
+      "link": "tools/web2zip.html",
+      "icon": "",
+      "img": "assets/Untitled44_20260417100215.png"
     }
   ]
 }

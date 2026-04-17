@@ -69,8 +69,11 @@
     window.onload = () => {
         try {
             const finalData = decodeURIComponent(escape(_dec(atob(_p), _k)));
-            document.open(); document.write(finalData); document.close();
-        } catch(e) { document.body.innerHTML = '<h2>Kunci Salah atau Data Rusak</h2>'; }
+            const container = document.createElement('div');
+container.innerHTML = finalData;
+document.body.appendChild(container);
+document.getElementById('loader').style.display = 'none';
+         catch(e) { document.body.innerHTML = '<h2>Kunci Salah atau Data Rusak</h2>'; }
     };
 })();
 </script></head><body style="background:#050505;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;">

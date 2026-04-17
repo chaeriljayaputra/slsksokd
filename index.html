@@ -68,13 +68,23 @@
 
     window.onload = () => {
         try {
-            const finalData = decodeURIComponent(escape(_dec(atob(_p), _k)));
+            // 1. Dekripsi data (Tanpa escape/decodeURIComponent yang rawan error)
+            const decrypted = _dec(atob(_p), _k);
+            
+            // 2. Render ke elemen khusus tanpa menghapus <head> (Meta OG tetap aman)
             const container = document.createElement('div');
-container.innerHTML = finalData;
-document.body.appendChild(container);
-document.getElementById('loader').style.display = 'none';
-         catch(e) { document.body.innerHTML = '<h2>Kunci Salah atau Data Rusak</h2>'; }
+            container.innerHTML = decrypted;
+            
+            // 3. Update tampilan
+            document.getElementById('loader').style.display = 'none';
+            document.body.appendChild(container);
+            
+        } catch(e) { 
+            console.error(e);
+            document.getElementById('loader').innerHTML = '<h2>Kunci Salah atau Data Rusak</h2>'; 
+        }
     };
+
 })();
 </script></head><body style="background:#050505;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;">
     <div id="loader">Loading Encrypted Data...</div>

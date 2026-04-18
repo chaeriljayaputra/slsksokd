@@ -1,8 +1,9 @@
+<!-- #ByLonnieAiAccang -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lonnie AI - Premium Terminal</title>
     <!-- Premium Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -33,38 +34,29 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
+        /* FIX LAYOUT: Mencegah body scrolling atau terdorong */
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Mencegah scroll pada body utama di semua device */
+            overflow: hidden; /* Mutlak: tidak ada scroll di luar kotak aplikasi */
             background: var(--bg-base);
-            background-image: var(--bg-gradient);
         }
 
         body {
-            position: fixed; /* Fix mutlak untuk menghindari bug address bar di iOS/Android Chrome */
-            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--text-main);
+            /* Fix iOS/Android address bar issue */
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
         }
 
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
 
         /* --- NAV/BACK BUTTON --- */
         .nav-top {
@@ -100,7 +92,13 @@
             max-width: 440px; 
             border-radius: 24px;
             text-align: center; 
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
             animation: fadeIn 0.6s ease-out; 
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
         .logo-icon { font-size: 2.8rem; color: var(--primary); margin-bottom: 1.2rem; filter: drop-shadow(0 0 25px var(--primary-glow)); }
@@ -135,24 +133,22 @@
         #setup-screen .tutorial a { color: var(--text-main); text-decoration: underline; text-underline-offset: 4px; font-weight: 500; transition: opacity 0.2s; }
         #setup-screen .tutorial a:hover { opacity: 0.8; }
 
-        /* --- CHAT SCREEN LAYOUT (SUPER STRICT FLEXBOX) --- */
+        /* --- CHAT SCREEN LAYOUT (SUPER STRICT) --- */
         #chat-screen {
-            display: none; /* diubah jadi flex by JS */
-            flex-direction: column;
+            display: none; 
             width: 100%; 
-            height: 100%;
-            border-radius: 0; 
-            border: none;
-            overflow: hidden; /* Mengunci agar isinya tidak pernah bocor (spill) keluar form */
+            height: 100%; /* Default Mobile: Full Screen */
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            flex-direction: column;
             animation: fadeIn 0.4s ease-out;
         }
 
         .chat-header {
-            flex: 0 0 auto; /* Header fix height */
+            flex: 0 0 auto; /* Tinggi header tetap */
             padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border);
             display: flex; justify-content: space-between; align-items: center; background: rgba(9, 9, 11, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             z-index: 20;
         }
         .header-info { display: flex; align-items: center; gap: 0.8rem; }
@@ -169,8 +165,11 @@
         .btn-icon:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
 
         #chat-container { 
-            flex: 1 1 auto; /* Ambil sisa space yg ada tanpa mendorong footer keluar */
-            padding: 1.5rem; overflow-y: auto; overflow-x: hidden;
+            flex: 1 1 0; /* KUNCI UTAMA: Biarkan mengambil sisa tempat, TAPI `0` mencegah tumpah ke bawah */
+            min-height: 0; /* Mutlak diperlukan untuk scroll di dalam flex item */
+            padding: 1.5rem; 
+            overflow-y: auto; 
+            overflow-x: hidden;
             display: flex; flex-direction: column; gap: 1.5rem; scroll-behavior: smooth; 
         }
 
@@ -198,17 +197,14 @@
         .btn-copy:hover { background: var(--text-main); color: var(--primary-invert); }
         .code-block pre { padding: 1.2rem; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: #f4f4f5; line-height: 1.5; }
 
-        /* --- INPUT AREA (BULLETPROOF FIX) --- */
+        /* --- INPUT AREA --- */
         .chat-input-area { 
-            flex: 0 0 auto; /* Kunci tingginya, tidak boleh menyusut atau molor paksa dari container */
+            flex: 0 0 auto; /* Tinggi tetap, tidak membesar/mengecil */
             padding: 1rem 1.5rem; 
-            padding-bottom: calc(1rem + env(safe-area-inset-bottom)); /* Safe area HANYA di mobile */
+            padding-bottom: calc(1rem + env(safe-area-inset-bottom));
             background: rgba(9, 9, 11, 0.95); 
             border-top: 1px solid var(--glass-border); 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px);
             width: 100%;
-            box-sizing: border-box; /* Pastikan padding masuk ke perhitungan width/height */
         }
         .input-wrapper { 
             display: flex; 
@@ -218,13 +214,10 @@
             border-radius: 20px; 
             border: 1px solid #3f3f46; 
             transition: border-color 0.3s; 
-            align-items: flex-end; /* Memastikan tombol panah sejajar bawah dgn textarea */
+            align-items: flex-end; 
             width: 100%;
-            box-sizing: border-box;
         }
-        .input-wrapper:focus-within { 
-            border-color: rgba(255,255,255,0.5); 
-        }
+        .input-wrapper:focus-within { border-color: rgba(255,255,255,0.5); }
         
         .input-wrapper textarea { 
             flex: 1 1 auto; 
@@ -236,19 +229,18 @@
             line-height: 24px;
             outline: none; 
             resize: none; 
-            height: 48px; /* TINGGI DASAR MUTLAK */
+            height: 48px; 
             max-height: 150px; 
             overflow-y: auto; 
             -webkit-appearance: none;
             border-radius: 14px;
-            box-sizing: border-box;
         }
         .input-wrapper textarea::-webkit-scrollbar { width: 4px; }
         .input-wrapper textarea::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         
         .btn-send { 
-            flex: 0 0 48px; /* LEBAR MUTLAK */
-            height: 48px; /* TINGGI MUTLAK (Sama dgn base textarea) */
+            flex: 0 0 48px; 
+            height: 48px; 
             background: var(--primary); 
             color: var(--primary-invert); 
             border: none; 
@@ -276,15 +268,19 @@
         /* Table / Desktop - Portrait & Landscape */
         @media (min-width: 768px) {
             #chat-screen {
-                height: 90%; /* Ambil 90% dari body fixed */
+                height: 90vh; /* Mutlak terkunci 90% viewport height */
+                max-height: 900px;
                 width: 95%; 
                 max-width: 1200px;
                 border-radius: 24px; 
                 border: 1px solid var(--glass-border);
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
             }
             .message-wrapper { max-width: 80%; }
             .chat-input-area {
-                padding: 1.5rem 2rem; /* Hapus env() untuk desktop agar tidak memotong bottom box */
+                padding: 1.5rem 2rem;
+                border-bottom-left-radius: 24px;
+                border-bottom-right-radius: 24px;
             }
         }
 
@@ -303,7 +299,6 @@
             .message { padding: 0.8rem 1rem; font-size: 0.9rem; }
             .code-block pre { padding: 1rem; font-size: 0.8rem; }
             
-            /* Penyesuaian dimensi input form agar ringkas di HP */
             .chat-input-area { 
                 padding: 0.8rem 1rem; 
                 padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); 
@@ -331,7 +326,7 @@
 <body>
 
     <!-- SETUP SCREEN -->
-    <div id="setup-screen" class="glass-panel">
+    <div id="setup-screen">
         <div class="nav-top">
             <a href="../index.html" class="btn-back">
                 <i class="fa-solid fa-arrow-left"></i> <span>Kembali</span>
@@ -358,7 +353,7 @@
     </div>
 
     <!-- CHAT SCREEN -->
-    <div id="chat-screen" class="glass-panel">
+    <div id="chat-screen">
         <div class="chat-header">
             <div class="header-info">
                 <i class="fa-solid fa-terminal"></i>
@@ -385,7 +380,7 @@
             </div>
         </div>
         
-        <!-- KOLOM INPUT TEXT/ENTER FIX -->
+        <!-- KOLOM INPUT TEXT/ENTER -->
         <div class="chat-input-area">
             <div class="input-wrapper">
                 <textarea id="chat-input" placeholder="Execute command..." rows="1"></textarea>
@@ -456,11 +451,10 @@ Jika kamu memberikan baris kode (code block) APAPUN, kamu WAJIB memasukkan teks 
             return systemRules;
         }
 
-        // Logic Auto-resize yang dimaksimalkan untuk box-sizing: border-box
-        const baseTextareaHeight = window.innerWidth <= 767 ? 40 : 48; // Base height sesuai CSS Media Queries
+        const baseTextareaHeight = window.innerWidth <= 767 ? 40 : 48;
 
         chatInput.addEventListener('input', function() {
-            this.style.height = baseTextareaHeight + 'px'; // Reset ke tinggi awal yang tepat
+            this.style.height = baseTextareaHeight + 'px';
             let scrollHeight = this.scrollHeight;
             if (scrollHeight > baseTextareaHeight) {
                 this.style.height = Math.min(scrollHeight, 150) + 'px';
@@ -476,7 +470,7 @@ Jika kamu memberikan baris kode (code block) APAPUN, kamu WAJIB memasukkan teks 
             
             apiKey = token;
             setupScreen.style.display = 'none';
-            chatScreen.style.display = 'flex'; // Display dirubah di sini
+            chatScreen.style.display = 'flex';
             
             initChat();
         });
@@ -573,7 +567,7 @@ Jika kamu memberikan baris kode (code block) APAPUN, kamu WAJIB memasukkan teks 
 
             appendMessage('user', text);
             chatInput.value = '';
-            chatInput.style.height = baseTextareaHeight + 'px'; // Kembalikan tinggi dengan presisi CSS
+            chatInput.style.height = baseTextareaHeight + 'px'; 
             messageHistory.push({ role: "user", content: text });
             
             typingIndicator.style.display = 'block';

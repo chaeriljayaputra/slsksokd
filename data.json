@@ -36,6 +36,13 @@
       "link": "tools/web2zip.html",
       "icon": "",
       "img": "assets/Untitled44_20260417100215.png"
+    },
+    {
+      "name": "Lonnie Ai",
+      "desc": "Lonnie AI: Premium Hacker Interface. Eksekusi perintah tanpa filter melalui OpenRouter API",
+      "link": "tools/LonnieAi.html",
+      "icon": "",
+      "img": "assets/Untitled46_20260418100412.jpg"
     }
   ]
 }

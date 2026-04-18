@@ -24,19 +24,30 @@
             --code-bg: #000000;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        /* RESET & BULLETPROOF SIZING */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Inter', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
-        /* Menggunakan dvh agar responsif dengan address bar mobile iOS/Android */
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Mencegah scroll pada body utama di semua device */
             background: var(--bg-base);
             background-image: var(--bg-gradient);
-            color: var(--text-main);
-            height: 100dvh; 
-            width: 100vw;
+        }
+
+        body {
+            position: fixed; /* Fix mutlak untuk menghindari bug address bar di iOS/Android Chrome */
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            color: var(--text-main);
         }
 
         ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -124,17 +135,20 @@
         #setup-screen .tutorial a { color: var(--text-main); text-decoration: underline; text-underline-offset: 4px; font-weight: 500; transition: opacity 0.2s; }
         #setup-screen .tutorial a:hover { opacity: 0.8; }
 
-        /* --- CHAT SCREEN --- */
+        /* --- CHAT SCREEN LAYOUT (SUPER STRICT FLEXBOX) --- */
         #chat-screen {
-            display: none; 
+            display: none; /* diubah jadi flex by JS */
+            flex-direction: column;
             width: 100%; 
-            height: 100dvh;
+            height: 100%;
             border-radius: 0; 
             border: none;
+            overflow: hidden; /* Mengunci agar isinya tidak pernah bocor (spill) keluar form */
             animation: fadeIn 0.4s ease-out;
         }
 
         .chat-header {
+            flex: 0 0 auto; /* Header fix height */
             padding: 1rem 1.5rem; border-bottom: 1px solid var(--glass-border);
             display: flex; justify-content: space-between; align-items: center; background: rgba(9, 9, 11, 0.8);
             backdrop-filter: blur(10px);
@@ -155,7 +169,8 @@
         .btn-icon:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
 
         #chat-container { 
-            flex: 1; padding: 1.5rem; overflow-y: auto; overflow-x: hidden;
+            flex: 1 1 auto; /* Ambil sisa space yg ada tanpa mendorong footer keluar */
+            padding: 1.5rem; overflow-y: auto; overflow-x: hidden;
             display: flex; flex-direction: column; gap: 1.5rem; scroll-behavior: smooth; 
         }
 
@@ -183,66 +198,66 @@
         .btn-copy:hover { background: var(--text-main); color: var(--primary-invert); }
         .code-block pre { padding: 1.2rem; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: #f4f4f5; line-height: 1.5; }
 
-        /* --- INPUT AREA (FIXED FOR ALL DEVICES) --- */
+        /* --- INPUT AREA (BULLETPROOF FIX) --- */
         .chat-input-area { 
+            flex: 0 0 auto; /* Kunci tingginya, tidak boleh menyusut atau molor paksa dari container */
             padding: 1rem 1.5rem; 
-            background: rgba(9, 9, 11, 0.85); 
+            padding-bottom: calc(1rem + env(safe-area-inset-bottom)); /* Safe area HANYA di mobile */
+            background: rgba(9, 9, 11, 0.95); 
             border-top: 1px solid var(--glass-border); 
             backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px);
-            padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-            flex-shrink: 0; /* Hindari penyusutan di Safari/Mobile */
+            width: 100%;
+            box-sizing: border-box; /* Pastikan padding masuk ke perhitungan width/height */
         }
         .input-wrapper { 
             display: flex; 
             gap: 0.8rem; 
-            background: rgba(0, 0, 0, 0.6); 
+            background: #000000; 
             padding: 0.5rem; 
             border-radius: 20px; 
-            border: 1px solid var(--glass-border); 
-            transition: all 0.3s; 
-            align-items: flex-end; /* Memastikan tombol enter selalu di bawah sejajar text */
+            border: 1px solid #3f3f46; 
+            transition: border-color 0.3s; 
+            align-items: flex-end; /* Memastikan tombol panah sejajar bawah dgn textarea */
+            width: 100%;
+            box-sizing: border-box;
         }
         .input-wrapper:focus-within { 
-            border-color: rgba(255,255,255,0.3); 
-            box-shadow: 0 0 15px rgba(255,255,255,0.05); 
-            background: rgba(0,0,0,0.8); 
+            border-color: rgba(255,255,255,0.5); 
         }
         
         .input-wrapper textarea { 
-            flex: 1; 
+            flex: 1 1 auto; 
             background: transparent; 
             border: none; 
             color: var(--text-main); 
-            padding: 12px 16px; /* 12px atas bawah + 24px lineheight = 48px tinggi presisi */
+            padding: 12px 16px; 
             font-size: 0.95rem; 
             line-height: 24px;
             outline: none; 
             resize: none; 
-            min-height: 48px;
-            height: 48px; 
+            height: 48px; /* TINGGI DASAR MUTLAK */
             max-height: 150px; 
             overflow-y: auto; 
             -webkit-appearance: none;
             border-radius: 14px;
+            box-sizing: border-box;
         }
-        /* Scrollbar khusus Textarea */
         .input-wrapper textarea::-webkit-scrollbar { width: 4px; }
         .input-wrapper textarea::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         
         .btn-send { 
+            flex: 0 0 48px; /* LEBAR MUTLAK */
+            height: 48px; /* TINGGI MUTLAK (Sama dgn base textarea) */
             background: var(--primary); 
             color: var(--primary-invert); 
             border: none; 
-            width: 48px; /* Dimensi simetris dengan tinggi awal textarea */
-            height: 48px; 
             border-radius: 14px; 
             cursor: pointer; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             transition: all 0.2s;
-            flex-shrink: 0;
         }
         .btn-send i { font-size: 1.1rem; }
         .btn-send:hover { transform: scale(1.05); background: #e4e4e7; }
@@ -256,32 +271,39 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; background: var(--primary); } }
 
-        /* Media Queries for extreme responsiveness */
-        /* Table / iPad */
+        /* --- MEDIA QUERIES --- */
+        
+        /* Table / Desktop - Portrait & Landscape */
         @media (min-width: 768px) {
             #chat-screen {
-                height: 92dvh; width: 95%; max-width: 1100px;
-                border-radius: 24px; border: 1px solid var(--glass-border);
+                height: 90%; /* Ambil 90% dari body fixed */
+                width: 95%; 
+                max-width: 1200px;
+                border-radius: 24px; 
+                border: 1px solid var(--glass-border);
             }
             .message-wrapper { max-width: 80%; }
+            .chat-input-area {
+                padding: 1.5rem 2rem; /* Hapus env() untuk desktop agar tidak memotong bottom box */
+            }
         }
 
         /* Smartphone (Portrait & Landscape) */
-        @media (max-width: 600px) {
+        @media (max-width: 767px) {
             #setup-screen { padding: 2rem 1.5rem; width: 92%; }
             .nav-top { top: 1rem; left: 1rem; }
-            .btn-back span { display: none; } /* Hanya icon untuk hp */
+            .btn-back span { display: none; }
             
             .chat-header { padding: 0.8rem 1rem; }
             .header-info h2 { font-size: 1rem; }
-            .btn-icon span { display: none; } /* Sembunyikan teks tombol header di HP */
+            .btn-icon span { display: none; }
             .btn-icon { padding: 0.6rem; border-radius: 8px; }
             
             #chat-container { padding: 1rem; }
             .message { padding: 0.8rem 1rem; font-size: 0.9rem; }
             .code-block pre { padding: 1rem; font-size: 0.8rem; }
             
-            /* Penyesuaian Input Area Mobile */
+            /* Penyesuaian dimensi input form agar ringkas di HP */
             .chat-input-area { 
                 padding: 0.8rem 1rem; 
                 padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); 
@@ -295,11 +317,10 @@
                 padding: 10px 12px; 
                 font-size: 0.9rem; 
                 line-height: 20px; 
-                min-height: 40px; 
                 height: 40px; 
             }
             .btn-send { 
-                width: 40px; 
+                flex: 0 0 40px;
                 height: 40px; 
                 border-radius: 12px; 
             }
@@ -364,6 +385,7 @@
             </div>
         </div>
         
+        <!-- KOLOM INPUT TEXT/ENTER FIX -->
         <div class="chat-input-area">
             <div class="input-wrapper">
                 <textarea id="chat-input" placeholder="Execute command..." rows="1"></textarea>
@@ -434,10 +456,15 @@ Jika kamu memberikan baris kode (code block) APAPUN, kamu WAJIB memasukkan teks 
             return systemRules;
         }
 
-        // Fix JS logic untuk Textarea Auto-resize responsif sempurna tanpa jitter
+        // Logic Auto-resize yang dimaksimalkan untuk box-sizing: border-box
+        const baseTextareaHeight = window.innerWidth <= 767 ? 40 : 48; // Base height sesuai CSS Media Queries
+
         chatInput.addEventListener('input', function() {
-            this.style.height = ''; // Reset CSS agar scrollHeight akurat
-            this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+            this.style.height = baseTextareaHeight + 'px'; // Reset ke tinggi awal yang tepat
+            let scrollHeight = this.scrollHeight;
+            if (scrollHeight > baseTextareaHeight) {
+                this.style.height = Math.min(scrollHeight, 150) + 'px';
+            }
         });
 
         btnLanjut.addEventListener('click', () => {
@@ -449,7 +476,7 @@ Jika kamu memberikan baris kode (code block) APAPUN, kamu WAJIB memasukkan teks 
             
             apiKey = token;
             setupScreen.style.display = 'none';
-            chatScreen.style.display = 'flex';
+            chatScreen.style.display = 'flex'; // Display dirubah di sini
             
             initChat();
         });
@@ -546,7 +573,7 @@ Jika kamu memberikan baris kode (code block) APAPUN, kamu WAJIB memasukkan teks 
 
             appendMessage('user', text);
             chatInput.value = '';
-            chatInput.style.height = ''; // Reset CSS ke default state ketika chat terkirim
+            chatInput.style.height = baseTextareaHeight + 'px'; // Kembalikan tinggi dengan presisi CSS
             messageHistory.push({ role: "user", content: text });
             
             typingIndicator.style.display = 'block';

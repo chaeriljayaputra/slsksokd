@@ -5,88 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Accang. - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <script>
-        tailwind.config = {
-            theme: { extend: { boxShadow: { 'neon-white': '0 0 15px rgba(255, 255, 255, 0.1)', 'neon-blue': '0 0 20px rgba(37, 99, 235, 0.15)', } } }
-        }
+        tailwind.config = { theme: { extend: { boxShadow: { 'neon-blue': '0 0 20px rgba(37, 99, 235, 0.3)', 'glow': '0 0 40px -10px rgba(37, 99, 235, 0.4)' } } } }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #ffffff; margin: 0; padding: 0; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #030303; color: #ffffff; margin: 0; padding: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         
-        .interactive-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .interactive-card:hover { transform: translateY(-4px) scale(1.01); border-color: #555; box-shadow: 0 15px 35px -10px rgba(0,0,0,0.8), 0 0 20px rgba(37, 99, 235, 0.15); }
-        .interactive-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .interactive-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        .interactive-card { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease; will-change: transform, box-shadow; }
+        .interactive-card:hover { transform: translateY(-5px) scale(1.02); border-color: #3b82f6; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.9), 0 0 25px rgba(37, 99, 235, 0.15); }
+        .interactive-btn { transition: transform 0.2s ease, box-shadow 0.2s ease; will-change: transform; }
+        .interactive-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .interactive-btn:active { transform: scale(0.95); }
 
         .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
         
-        /* HIDE GOOGLE TRANSLATE UI COMPLETELY */
         #google_translate_element, .goog-te-banner-frame, .goog-te-gadget, .skiptranslate, .goog-tooltip, .goog-tooltip:hover, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; border: none !important; margin: 0 !important; padding: 0 !important; }
         body { top: 0px !important; position: static !important; min-height: 100vh; }
-        .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-
-        /* 3D Preloader */
-        #preloader { transition: opacity 0.6s ease, visibility 0.6s ease; z-index: 9999; }
-        .preloader-scene { perspective: 800px; display: flex; justify-content: center; align-items: center; }
-        .gears-wrapper { position: relative; width: 120px; height: 120px; transform-style: preserve-3d; transform: rotateX(40deg) rotateY(-20deg); }
-        .gear-pos { position: absolute; display: flex; justify-content: center; align-items: center; transform-style: preserve-3d; }
-        .gear-pos i { display: block; text-shadow: 0 1px 0 #555, 0 2px 0 #444, 0 3px 0 #333, 0 4px 0 #222, 0 15px 20px rgba(0,0,0,0.8); }
-        .g1 { top: 0; left: 0; transform: translateZ(20px); font-size: 70px; color: #f3f4f6; animation: spin-cw 4s linear infinite; }
-        .g2 { top: 50px; left: 58px; transform: translateZ(10px); font-size: 46px; color: #9ca3af; animation: spin-ccw 2.5s linear infinite; }
-        .g3 { top: 66px; left: -10px; transform: translateZ(30px); font-size: 34px; color: #4b5563; animation: spin-ccw 1.8s linear infinite; }
-        @keyframes spin-cw { 100% { transform: rotateZ(360deg); } }
-        @keyframes spin-ccw { 100% { transform: rotateZ(-360deg); } }
-
-        /* --- 3D LANYARD SYSTEM --- */
-        #profile-section { overflow: visible; padding-top: 100px; padding-bottom: 100px; perspective: 1500px; } 
-        #lanyard-left { position: relative; width: 100%; max-width: 340px; transform-style: preserve-3d; margin: 0 auto; z-index: 20; touch-action: none; }
-        #anchor-neck { position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; z-index: 10; pointer-events: none; }
-        #strap-svg { position: absolute; top: -120px; left: 0; width: 100%; pointer-events: none; z-index: 5; overflow: visible; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.9)); }
-        .strap-path { stroke: #222; stroke-width: 22; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-        .metal-connector { fill: linear-gradient(90deg, #444, #888, #333); stroke: #111; stroke-width: 1.5; }
-        .lanyard-text { font-size: 13.5px; font-weight: 800; font-family: 'Inter', sans-serif; fill: #666; letter-spacing: 0.12em; text-shadow: 0 1px 1px rgba(0,0,0,0.9); dominant-baseline: middle; text-anchor: middle; }
-
-        /* Lanyard Badge True 3D Flip (Front & Back) */
-        .badge-wrapper { position: relative; width: 100%; cursor: grab; user-select: none; transform-style: preserve-3d; touch-action: none; transform-origin: top center; z-index: 20; }
-        .badge-wrapper.dragging { cursor: grabbing; z-index: 50; }
         
-        .id-badge-front { 
-            position: relative; display: flex; flex-direction: column; align-items: center; padding: 2rem; background: #111111; border-radius: 24px; 
-            border: 1px solid #333; transform: translateZ(1px);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1); 
-            background-image: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 100%);
-            backface-visibility: hidden; z-index: 2;
+        /* Preloader */
+        #preloader { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: center; align-items: center; overflow: hidden; pointer-events: none;}
+        #preloader-curtain { position: absolute; inset: 0; background: linear-gradient(to bottom, #030303 40%, #0a1128 80%, #1d4ed8 100%); transform-origin: bottom; z-index: 1; will-change: transform; }
+        #winch-cable { position: absolute; top: 50%; left: 50%; transform: translateX(-50%); width: 3px; height: 100vh; background: repeating-linear-gradient(to bottom, #555, #555 5px, #222 5px, #222 10px); z-index: 2; will-change: transform; }
+        .preloader-scene { perspective: 1200px; transform-style: preserve-3d; z-index: 3; margin-top: -120px; will-change: transform; }
+        .gears-wrapper { position: relative; width: 120px; height: 120px; transform-style: preserve-3d; transform: rotateX(25deg) rotateY(-15deg); }
+        .gear-pos { position: absolute; display: flex; justify-content: center; align-items: center; transform-style: preserve-3d; will-change: transform; }
+        .gear-pos i { display: block; text-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 3px 0 #333, 0 4px 0 #111, 0 20px 25px rgba(0,0,0,0.9); }
+        .g1 { top: 0; left: 0; font-size: 75px; color: #f3f4f6; }
+        .g2 { top: 50px; left: 60px; font-size: 48px; color: #9ca3af; }
+        .g3 { top: 68px; left: -12px; font-size: 36px; color: #4b5563; }
+
+        /* HD Waterfall Flow - Optimized CSS Animation */
+        .water-flow { position: relative; overflow: hidden; }
+        .water-flow::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.3), transparent);
+            z-index: 20; pointer-events: none; mix-blend-mode: screen; 
+            transform: translateY(-100%); will-change: transform, opacity;
         }
-        
-        .id-badge-back {
-            position: absolute; inset: 0; background: #0a0a0a; border-radius: 24px; border: 1px solid #222;
-            transform: rotateY(180deg) translateZ(1px); backface-visibility: hidden;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-image: repeating-linear-gradient(45deg, #111 0, #111 2px, #0a0a0a 2px, #0a0a0a 8px);
-        }
-        
-        .clip-hole { position: absolute; top: 12px; left: 50%; transform: translateX(-50%) translateZ(2px); width: 45px; height: 12px; background: #050505; border-radius: 6px; box-shadow: inset 0 3px 5px rgba(0,0,0,0.9); z-index: 5;}
-        .metal-clip { position: absolute; top: -35px; left: 50%; transform: translateX(-50%) translateZ(2px); width: 32px; height: 55px; background: linear-gradient(90deg, #555, #aaaa, #444); border-radius: 6px; box-shadow: 0 8px 12px rgba(0,0,0,0.6); z-index: 4;}
-        
-        .profile-img-frame { position: relative; padding: 4px; background: linear-gradient(135deg, #444, #111); border-radius: 50%; box-shadow: 0 15px 25px rgba(0,0,0,0.8); margin-bottom: 1.5rem; margin-top: 1rem; }
-        .profile-img { width: 100px; height: 100px; rounded-full object-cover border-4 border-[#0a0a0a]; }
+        .waterfall-active::after { animation: waterfall-drop 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes waterfall-drop { 0% { transform: translateY(-100%); opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } }
 
-        /* --- 3D OCTAHEDRON (Perbesar Scale) --- */
+        /* PURE LANYARD ENGINE HD */
+        #profile-section { overflow: visible; padding-top: 60px; padding-bottom: 60px; perspective: 2000px; } 
+        #lanyard-viewport { position: relative; width: 100%; max-width: 360px; height: 540px; display: flex; justify-content: center; align-items: flex-start; perspective: 2500px; margin: 0 auto; z-index: 20; touch-action: none; }
+        @media (max-width: 1024px) { #lanyard-viewport { height: 480px; max-width: 320px; } }
+        @media (max-width: 768px) { #lanyard-viewport { height: 460px; max-width: 300px; } }
+        @media (max-width: 480px) { #lanyard-viewport { height: 420px; max-width: 270px; } }
+        
+        #strap-svg-pure { position: absolute; top: -140px; left: 50%; transform: translateX(-50%); width: 100%; min-width: 650px; height: 700px; pointer-events: none; overflow: visible; z-index: 1; }
+        .strap-outer { fill: none; stroke: #0a0a0a; stroke-width: 18; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 20px 20px rgba(0,0,0,0.95)); }
+        .strap-inner { fill: none; stroke: #3b82f6; stroke-width: 4; stroke-dasharray: 10 20; opacity: 0.5; stroke-linecap: round; }
+        .metal-ring { fill: url(#ring-gradient); stroke: #000; stroke-width: 1; }
+        .lanyard-text { font-size: 14px; font-weight: 800; font-family: 'Inter', sans-serif; fill: #444; letter-spacing: 0.15em; text-shadow: 0 1px 1px #000; dominant-baseline: middle; text-anchor: middle; }
+
+        #badge-master { position: relative; width: 100%; height: 100%; cursor: grab; user-select: none; transform-style: preserve-3d; touch-action: none; transform-origin: top center; z-index: 10; margin-top: 25px; will-change: transform; }
+        #badge-master.dragging { cursor: grabbing; z-index: 50; }
+        .id-badge-front, .id-badge-back { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-style: preserve-3d; box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.95), inset 0 1px 3px rgba(255,255,255,0.15); will-change: transform; }
+        .id-badge-front { display: flex; flex-direction: column; background: #080808; border: 1px solid #222; transform: rotateY(0deg) translateZ(2px); overflow: hidden; background-image: radial-gradient(circle at 50% -20%, rgba(59,130,246,0.2) 0%, transparent 60%); z-index: 2; }
+        .id-badge-back { background: #050505; border: 1px solid #1a1a1a; transform: rotateY(180deg) translateZ(2px); display: flex; flex-direction: column; justify-content: flex-start; align-items: center; z-index: 1; padding: 0; overflow: hidden; }
+        .mag-stripe { width: 100%; height: 55px; background: #000; margin-top: 35px; box-shadow: 0 4px 10px rgba(0,0,0,0.9); border-y: 1px solid #111; }
+        .hologram-effect { position: absolute; inset: 0; background: linear-gradient(135deg, transparent 35%, rgba(255,255,255,0.03) 45%, rgba(59,130,246,0.15) 50%, rgba(255,255,255,0.03) 55%, transparent 65%); background-size: 300% 300%; pointer-events: none; border-radius: 20px; animation: holo-sweep 4s ease-in-out infinite; z-index: 10; transform: translateZ(1px); will-change: background-position;}
+        @keyframes holo-sweep { 0% { background-position: 0% 0%; } 100% { background-position: 300% 300%; } }
+        .clip-hole { position: absolute; top: 12px; left: 50%; transform: translateX(-50%) translateZ(4px); width: 45px; height: 12px; background: #000; border-radius: 6px; box-shadow: inset 0 4px 6px rgba(0,0,0,0.9); z-index: 20;}
+        .metal-clip { position: absolute; top: -35px; left: 50%; transform: translateX(-50%) translateZ(3px); width: 34px; height: 55px; background: linear-gradient(90deg, #555, #999, #333); border-radius: 6px; box-shadow: 0 10px 15px rgba(0,0,0,0.8); z-index: 19; border: 1px solid #222;}
+        .profile-img-frame { position: relative; padding: 3px; background: linear-gradient(135deg, #3b82f6, #1d4ed8, #050505); border-radius: 14px; box-shadow: 0 15px 30px rgba(0,0,0,0.9); z-index: 12; transform: translateZ(8px);}
+        .profile-img { width: 100px; height: 100px; border-radius: 11px; object-fit: cover; border: 3px solid #080808; filter: contrast(1.15) saturate(1.1); }
+        .id-chip { width: 38px; height: 28px; background: linear-gradient(135deg, #eab308, #a16207); border-radius: 6px; border: 1px solid #713f12; position: absolute; right: 22px; top: 75px; opacity: 0.9; z-index: 12; transform: translateZ(4px); background-image: repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0,0,0,0.15) 5px, rgba(0,0,0,0.15) 6px), repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 11px); box-shadow: inset 0 1px 2px rgba(255,255,255,0.4); }
+
+        /* 3D OCTAHEDRON - Optimized for ZERO Lag */
         .object-3d-scene { perspective: 1200px; width: 100%; height: 400px; display: flex; justify-content: center; align-items: center; }
-        .octahedron { position: relative; width: 100px; height: 100px; transform-style: preserve-3d; animation: rotate-obj 20s linear infinite; transform: scale(1.8); }
-        @media (min-width: 768px) { .octahedron { transform: scale(2.2); } }
+        .octahedron { position: relative; width: 100px; height: 100px; transform-style: preserve-3d; animation: rotate-obj 20s linear infinite; transform: scale(1.8) translateZ(0); will-change: transform; }
+        @media (min-width: 768px) { .octahedron { transform: scale(2.4) translateZ(0); } }
         @keyframes rotate-obj { 0% { transform: scale(var(--scale, 2)) rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: scale(var(--scale, 2)) rotateX(360deg) rotateY(720deg) rotateZ(360deg); } }
-        .octa-face { position: absolute; width: 100px; height: 100px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.02); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); }
+        
+        /* Removed expensive backdrop-filter for mobile GPU optimization */
+        .octa-face { position: absolute; width: 100px; height: 100px; border: 1.5px solid rgba(59,130,246,0.5); background: rgba(59,130,246,0.1); box-shadow: inset 0 0 20px rgba(59,130,246,0.2); backface-visibility: hidden; }
         .octa-face.ft { transform: rotateX( 35deg) translateZ(35px); border-bottom: none; border-left: none;}
         .octa-face.bk { transform: rotateX(-35deg) translateZ(-35px) rotateY(180deg); border-bottom: none; border-left: none; }
         .octa-face.rt { transform: rotateY( 90deg) rotateX( 35deg) translateZ(35px); border-bottom: none; border-left: none; }
@@ -96,310 +99,437 @@
         .octa-face.rt.bm { transform: rotateY( 90deg) rotateX(-35deg) translateZ(35px); border-top: none; border-left: none;}
         .octa-face.lt.bm { transform: rotateY(-90deg) rotateX(-35deg) translateZ(35px); border-top: none; border-left: none;}
 
-        #lang-transition { pointer-events: none; opacity: 0; transition: opacity 0.4s ease; z-index: 9998; backdrop-filter: blur(5px); }
+        .gsap-hidden { visibility: hidden; }
+        #lang-transition { pointer-events: none; opacity: 0; transition: opacity 0.4s ease; z-index: 9998; backdrop-filter: blur(8px); }
     </style>
 </head>
-<body class="antialiased selection:bg-gray-700 selection:text-white bg-[#0a0a0a]">
+<body class="antialiased selection:bg-blue-600 selection:text-white bg-[#030303]">
 
     <div id="google_translate_element"></div>
-    <div id="lang-transition" class="fixed inset-0 bg-black/60 flex items-center justify-center"><i class="fas fa-spinner fa-spin text-4xl text-white"></i></div>
+    <div id="lang-transition" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[9998]"><i class="fas fa-circle-notch fa-spin text-4xl text-blue-500"></i></div>
 
-    <div id="preloader" class="fixed inset-0 bg-[#0a0a0a] preloader-scene z-[9999] flex">
-        <div class="gears-wrapper">
-            <div class="gear-pos g1"><i class="fas fa-gear"></i></div>
-            <div class="gear-pos g2"><i class="fas fa-gear"></i></div>
-            <div class="gear-pos g3"><i class="fas fa-gear"></i></div>
+    <div id="preloader">
+        <div id="winch-cable"></div>
+        <div id="preloader-curtain"></div>
+        <div class="preloader-scene">
+            <div class="gears-wrapper">
+                <div class="gear-pos g1"><i class="fas fa-gear"></i></div>
+                <div class="gear-pos g2"><i class="fas fa-gear"></i></div>
+                <div class="gear-pos g3"><i class="fas fa-gear"></i></div>
+            </div>
         </div>
     </div>
 
-    <nav class="fixed w-full top-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-[#222]">
+    <nav class="fixed w-full top-0 z-50 bg-[#030303]/85 backdrop-blur-lg border-b border-[#1a1a1a] transform -translate-y-full nav-anim">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="font-bold text-xl flex items-center gap-2 transition-all hover:shadow-neon-white hover:scale-105 rounded-full p-1">
-                <img src="assets/profile.jpg" alt="Logo" class="w-8 h-8 rounded-full bg-gray-800" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=random'">
-                Accang<span class="text-gray-500">.</span>
+            <a href="#" class="font-extrabold text-xl flex items-center gap-3 transition-all hover:shadow-neon-blue hover:scale-105 rounded-full p-1">
+                <img src="assets/profile.jpg" alt="Logo" class="w-8 h-8 rounded-full border border-[#333]" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=2563eb&color=fff&bold=true'">
+                Accang<span class="text-blue-500">.</span>
             </a>
             <div>
-                <select id="lang-switch" onchange="changeLanguage(this.value)" class="bg-[#111] border border-[#333] text-sm rounded-lg px-3 py-1.5 outline-none text-white focus:border-blue-500 transition-all cursor-pointer shadow-lg">
+                <select id="lang-switch" onchange="changeLanguage(this.value)" class="bg-[#0a0a0a] border border-[#333] text-sm rounded-lg px-3 py-1.5 outline-none text-white focus:border-blue-500 transition-all cursor-pointer shadow-lg font-medium">
                     <option value="id">Indonesia</option>
                     <option value="en">English</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh-CN">中文</option>
                 </select>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto px-6 pt-32 pb-10 space-y-24">
+    <main class="max-w-6xl mx-auto px-6 pt-32 pb-10 space-y-24 overflow-hidden">
 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center min-h-[60vh] md:min-h-[70vh]">
-            <div class="order-2 md:order-1 text-center md:text-left">
-                <p class="text-gray-400 mb-2 font-medium">Halo, Saya</p>
-                <h1 id="typing-text" class="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 typing-cursor h-[60px] sm:h-[80px] md:h-[90px]">Accang.</h1>
-                <p class="text-gray-400 text-base sm:text-lg mb-8 leading-relaxed">Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.</p>
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center min-h-[60vh] md:min-h-[70vh] hero-section">
+            <div class="order-2 md:order-1 text-center md:text-left hero-text gsap-hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-4 font-mono text-xs tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.15)]">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_#3b82f6]"></span> System Online
+                </div>
+                <h1 id="typing-text" class="notranslate text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 typing-cursor h-[60px] sm:h-[80px] md:h-[90px] tracking-tight">Accang.</h1>
+                <p class="text-gray-400 text-base sm:text-lg mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.</p>
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                    <a href="#" class="bg-[#111] border border-[#222] px-6 py-3 rounded-xl flex items-center gap-2 font-medium interactive-btn hover:text-white"><i class="fab fa-whatsapp text-gray-300"></i> WhatsApp</a>
-                    <a href="#" class="bg-[#111] border border-[#222] px-6 py-3 rounded-xl flex items-center gap-2 font-medium interactive-btn hover:text-white"><i class="fab fa-tiktok text-gray-300"></i> Tiktok</a>
+                    <a href="#" class="bg-[#0a0a0a] border border-[#222] px-6 py-3.5 rounded-xl flex items-center gap-2 font-semibold interactive-btn hover:text-white hover:border-green-500/50 hover:bg-green-500/5 shadow-lg"><i class="fab fa-whatsapp text-green-500 text-lg"></i> WhatsApp</a>
+                    <a href="#" class="bg-[#0a0a0a] border border-[#222] px-6 py-3.5 rounded-xl flex items-center gap-2 font-semibold interactive-btn hover:text-white hover:border-pink-500/50 hover:bg-pink-500/5 shadow-lg"><i class="fab fa-tiktok text-gray-200 text-lg"></i> Tiktok</a>
                 </div>
             </div>
-            <div class="relative w-full h-[350px] md:h-[500px] flex items-center justify-center overflow-visible order-1 md:order-2">
+            <div class="relative w-full h-[350px] md:h-[500px] flex items-center justify-center overflow-visible order-1 md:order-2 hero-3d gsap-hidden">
                 <div class="object-3d-scene">
                     <div class="octahedron" style="--scale: 1.8;" id="octa-anim">
                         <div class="octa-face ft"></div><div class="octa-face bk"></div><div class="octa-face rt"></div><div class="octa-face lt"></div>
                         <div class="octa-face ft bm"></div><div class="octa-face bk bm"></div><div class="octa-face rt bm"></div><div class="octa-face lt bm"></div>
                     </div>
                 </div>
-                <div class="absolute w-48 h-48 md:w-64 md:h-64 bg-blue-600/10 rounded-full blur-[100px]"></div>
+                <div class="absolute w-56 h-56 md:w-72 md:h-72 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none mix-blend-screen"></div>
             </div>
         </section>
 
         <section id="profile-section" class="w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-12 lg:gap-16 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-12 lg:gap-16 items-start">
                 
-                <div id="lanyard-left">
-                    <div id="anchor-neck"></div>
-                    <svg id="strap-svg" viewBox="0 0 340 900" width="100%" height="900" preserveAspectRatio="xMidYMin slice">
-                        <path class="strap-path" id="lanyardPath" d="M 110 0 L 170 120 L 230 0" />
-                        <rect class="metal-connector" x="100" y="-10" width="20" height="15" rx="3" />
-                        <rect class="metal-connector" x="220" y="-10" width="20" height="15" rx="3" />
-                        <text class="lanyard-text"><textPath href="#lanyardPath" startOffset="50%" method="stretch">MANTAN ATLET TAKEWONDO TINGKAT KABUPATEN 2024 - 2025</textPath></text>
+                <div id="lanyard-viewport" class="gsap-hidden">
+                    <svg id="strap-svg-pure" viewBox="0 0 650 800" preserveAspectRatio="xMidYMin slice">
+                        <defs>
+                            <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#444;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#aaa;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#222;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path class="strap-outer" id="strap-p1" d="" />
+                        <path class="strap-inner" id="strap-p2" d="" />
+                        <circle class="metal-ring" id="ring-left" r="10" />
+                        <circle class="metal-ring" id="ring-right" r="10" />
+                        <text class="lanyard-text"><textPath href="#strap-p1" startOffset="50%" method="stretch">MANTAN ATLET TAKEWONDO TINGKAT KABUPATEN 2024 - 2025</textPath></text>
                     </svg>
 
-                    <div class="badge-wrapper" id="badge-wrapper">
+                    <div id="badge-master">
                         <div class="metal-clip"></div>
                         <div class="clip-hole"></div>
                         
                         <div class="id-badge-back">
-                            <i class="fas fa-qrcode text-6xl text-gray-700 mb-4"></i>
-                            <h3 class="text-xl font-bold text-gray-500">Accang.</h3>
-                            <p class="text-xs text-gray-600 mt-2 font-mono">ID: ACC-2026-DEV</p>
+                            <div class="mag-stripe"></div>
+                            <div class="w-full px-6 py-5 transform translate-z-[5px] flex flex-col items-center">
+                                <div class="bg-white p-2.5 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] mb-5">
+                                    <i class="fas fa-qrcode text-6xl text-gray-800"></i>
+                                </div>
+                                <div class="text-[9.5px] text-gray-500 font-mono text-center leading-relaxed">
+                                    IF FOUND, PLEASE RETURN TO<br><span class="text-blue-500 font-bold">ACCANG TECH CORP.</span><br>IDN BASE SECTOR 7
+                                </div>
+                                <div class="mt-5 w-full border-t border-[#1a1a1a] pt-3 text-center text-[12px] font-extrabold text-gray-400 font-mono tracking-widest">
+                                    ACC-2026-X99
+                                </div>
+                                <div class="opacity-20 mt-4"><i class="fas fa-barcode text-5xl"></i></div>
+                            </div>
                         </div>
                         
-                        <div class="id-badge-front">
-                            <div class="profile-img-frame">
-                                <img src="assets/profile.jpg" alt="Accang" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=222&color=fff'">
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2 text-center text-white">Accang</h3>
-                            <span class="bg-[#1a1a1a] border border-[#333] text-gray-300 text-xs px-4 py-1.5 rounded-full mb-8 font-medium shadow-md">Lead Developer & Engineer</span>
+                        <div class="id-badge-front p-0">
+                            <div class="hologram-effect"></div>
+                            <div class="id-chip"></div>
                             
-                            <div class="w-full space-y-4 text-sm">
-                                <div class="flex justify-between border-b border-[#222] pb-2"><span class="text-gray-500">Umur</span><span class="text-gray-300">17 Tahun</span></div>
-                                <div class="flex justify-between border-b border-[#222] pb-2"><span class="text-gray-500">Pendidikan</span><span class="text-gray-300">SMK / Setara</span></div>
-                                <div class="flex justify-between border-b border-[#222] pb-2"><span class="text-gray-500">Lokasi</span><span class="text-gray-300">Indonesia</span></div>
-                                <div class="flex justify-between"><span class="text-gray-500">Pengalaman</span><span class="text-gray-300">3+ Tahun</span></div>
+                            <div class="w-full bg-gradient-to-r from-blue-600/15 to-transparent py-3.5 px-6 flex justify-between items-center border-b border-blue-900/40 relative z-12">
+                                <div class="flex items-center gap-2.5">
+                                    <i class="fas fa-fingerprint text-blue-500 text-sm"></i>
+                                    <span class="text-[10px] font-bold text-gray-200 tracking-[0.2em] font-mono">GLOBAL PASS</span>
+                                </div>
+                                <i class="fas fa-wifi text-gray-500 rotate-90 text-xs opacity-60"></i>
+                            </div>
+
+                            <div class="flex flex-col px-7 py-6 w-full h-full relative z-12">
+                                <div class="flex items-start justify-between mb-5">
+                                    <div class="profile-img-frame">
+                                        <img src="assets/profile.jpg" alt="Accang" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Accang&background=2563eb&color=fff&bold=true'">
+                                    </div>
+                                    <div class="text-right mt-2 transform translate-z-[8px]">
+                                        <div class="text-[8px] text-gray-500 font-mono mb-1.5 tracking-wider">CLEARANCE</div>
+                                        <div class="text-xl font-black text-blue-400 border border-blue-500/40 bg-blue-500/5 px-2.5 py-0.5 rounded shadow-glow tracking-widest">OMNI</div>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="text-3xl font-black text-white transform translate-z-[12px] tracking-tighter uppercase leading-none">Accang</h3>
+                                <div class="text-[11px] text-blue-400 font-bold uppercase tracking-[0.18em] mt-2 mb-6 transform translate-z-[12px]">Lead Architect</div>
+                                
+                                <div class="w-full bg-[#0a0a0a]/90 backdrop-blur-md rounded-xl p-3.5 border border-[#1a1a1a] mt-auto transform translate-z-[8px] shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+                                    <div class="grid grid-cols-2 gap-y-3.5 gap-x-3 text-xs">
+                                        <div><span class="text-gray-500 block text-[8px] uppercase mb-1 font-mono tracking-wider">Division</span><span class="text-gray-200 font-semibold">Engineering</span></div>
+                                        <div><span class="text-gray-500 block text-[8px] uppercase mb-1 font-mono tracking-wider">Issued</span><span class="text-gray-200 font-semibold font-mono">2026.04</span></div>
+                                        <div><span class="text-gray-500 block text-[8px] uppercase mb-1 font-mono tracking-wider">Location</span><span class="text-gray-200 font-semibold">Indonesia</span></div>
+                                        <div><span class="text-gray-500 block text-[8px] uppercase mb-1 font-mono tracking-wider">Status</span><span class="text-green-400 font-bold flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_#4ade80]"></span> Active</span></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-[#111] border border-[#222] rounded-2xl p-6 md:p-8 w-full shadow-2xl relative z-10">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">Python</h4><p class="text-xs text-gray-500">Backend & Analitik Data</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">JavaScript</h4><p class="text-xs text-gray-500">Frontend & Node.js</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">WA Bot Engine</h4><p class="text-xs text-gray-500">CS Otomatis & Integrasi API</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">Telegram Bot</h4><p class="text-xs text-gray-500">Scraping & Auto Moderasi</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">AI Development</h4><p class="text-xs text-gray-500">Machine Learning & LLMs</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">App Architecture</h4><p class="text-xs text-gray-500">Solusi Web & Mobile</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">PocketMine-MP</h4><p class="text-xs text-gray-500">Dev Plugin Server Core</p></div>
-                        <div class="bg-[#1a1a1a] border border-[#2a2a2a] p-5 rounded-xl interactive-card"><h4 class="font-bold text-gray-100 mb-1">MC Bedrock</h4><p class="text-xs text-gray-500">Resource Pack UI/UX</p></div>
+                <div class="bg-[#080808] border border-[#111] rounded-[32px] p-7 md:p-10 w-full shadow-[0_20px_40px_-10px_rgba(0,0,0,0.9)] relative z-10 water-flow gsap-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent rounded-[32px] pointer-events-none"></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 relative z-10">
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fab fa-python text-blue-400 text-lg mr-2.5"></i>Python</h4><p class="text-xs text-gray-500 leading-relaxed">Backend & Analitik Data</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fab fa-js text-yellow-400 text-lg mr-2.5"></i>JavaScript</h4><p class="text-xs text-gray-500 leading-relaxed">Frontend & Node.js</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fab fa-whatsapp text-green-500 text-lg mr-2.5"></i>WA Engine</h4><p class="text-xs text-gray-500 leading-relaxed">CS Otomatis & Integrasi API</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fab fa-telegram text-blue-500 text-lg mr-2.5"></i>TG Bot</h4><p class="text-xs text-gray-500 leading-relaxed">Scraping & Auto Moderasi</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fas fa-brain text-pink-400 text-lg mr-2.5"></i>AI Dev</h4><p class="text-xs text-gray-500 leading-relaxed">Machine Learning & LLMs</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fas fa-layer-group text-purple-400 text-lg mr-2.5"></i>Architecture</h4><p class="text-xs text-gray-500 leading-relaxed">Solusi Web & Mobile</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fas fa-server text-gray-300 text-lg mr-2.5"></i>PocketMine</h4><p class="text-xs text-gray-500 leading-relaxed">Dev Plugin Server Core</p></div>
+                        <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-5 rounded-2xl interactive-card"><h4 class="font-bold text-gray-100 mb-1.5 text-sm flex items-center"><i class="fas fa-cube text-emerald-400 text-lg mr-2.5"></i>MC Bedrock</h4><p class="text-xs text-gray-500 leading-relaxed">Resource Pack UI/UX</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section>
-            <div class="flex items-center gap-4 mb-10"><h2 class="text-3xl font-bold">Perjalanan Saya</h2><div class="h-[1px] bg-[#333] flex-grow"></div></div>
-            <div class="relative ml-4 md:ml-6 space-y-8 pb-4">
-                <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-[#222]"></div>
-                
-                <div class="relative pl-8 interactive-card bg-[#111] border border-[#222] p-6 rounded-2xl">
-                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[9.5px] top-[30px] border-4 border-[#0a0a0a] shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
-                    <span class="text-xs font-bold text-blue-400 tracking-wider">2022 — AWAL MULA</span>
-                    <h3 class="text-xl font-bold text-white mt-1 mb-2">Mulai Belajar Coding</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed max-w-xl">Pertama kali belajar Python secara otodidak. Tertarik karena melihat potensi otomasi dan AI.</p>
+            <div class="flex items-center gap-5 mb-12 water-flow gsap-hidden"><h2 class="text-3xl font-extrabold tracking-tight">Perjalanan Saya</h2><div class="h-[1px] bg-[#222] flex-grow"></div></div>
+            <div class="relative ml-4 md:ml-6 space-y-10 pb-4">
+                <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-600 via-[#1a1a1a] to-[#1a1a1a]"></div>
+                <div class="relative pl-10 interactive-card bg-[#080808] border border-[#111] p-7 rounded-2xl water-flow gsap-hidden shadow-lg">
+                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[9.5px] top-[32px] border-[4px] border-[#030303] shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div>
+                    <span class="text-xs font-bold text-blue-500 tracking-widest font-mono">2022 — AWAL MULA</span>
+                    <h3 class="text-xl font-bold text-white mt-1.5 mb-2.5">Mulai Belajar Coding</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-2xl">Pertama kali belajar Python secara otodidak. Tertarik karena melihat potensi otomasi dan AI.</p>
                 </div>
-                
-                <div class="relative pl-8 interactive-card bg-[#111] border border-[#222] p-6 rounded-2xl">
-                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[9.5px] top-[30px] border-4 border-[#0a0a0a] shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
-                    <span class="text-xs font-bold text-blue-400 tracking-wider">2023 — BERKEMBANG</span>
-                    <h3 class="text-xl font-bold text-white mt-1 mb-2">Membangun Bot Pertama</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed max-w-xl">Berhasil membuat Telegram Userbot dan WhatsApp Bot pertama. Mulai mendalami JavaScript dan Node.js.</p>
+                <div class="relative pl-10 interactive-card bg-[#080808] border border-[#111] p-7 rounded-2xl water-flow gsap-hidden shadow-lg">
+                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[9.5px] top-[32px] border-[4px] border-[#030303] shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div>
+                    <span class="text-xs font-bold text-blue-500 tracking-widest font-mono">2023 — BERKEMBANG</span>
+                    <h3 class="text-xl font-bold text-white mt-1.5 mb-2.5">Membangun Bot Pertama</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-2xl">Berhasil membuat Telegram Userbot dan WhatsApp Bot pertama. Mulai mendalami JavaScript dan Node.js.</p>
                 </div>
-                
-                <div class="relative pl-8 interactive-card bg-[#111] border border-[#222] p-6 rounded-2xl">
-                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[9.5px] top-[30px] border-4 border-[#0a0a0a] shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
-                    <span class="text-xs font-bold text-blue-400 tracking-wider">2024 — EKSPANSI</span>
-                    <h3 class="text-xl font-bold text-white mt-1 mb-2">Masuk Dunia Web & AI</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed max-w-xl">Mengembangkan kemampuan ke web development fullstack dan AI integration, menangani arsitektur sistem skala tinggi.</p>
+                <div class="relative pl-10 interactive-card bg-[#080808] border border-[#111] p-7 rounded-2xl water-flow gsap-hidden shadow-lg">
+                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[9.5px] top-[32px] border-[4px] border-[#030303] shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div>
+                    <span class="text-xs font-bold text-blue-500 tracking-widest font-mono">2024 — EKSPANSI</span>
+                    <h3 class="text-xl font-bold text-white mt-1.5 mb-2.5">Masuk Dunia Web & AI</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-2xl">Mengembangkan kemampuan ke web development fullstack dan AI integration, menangani arsitektur sistem skala tinggi.</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <div class="flex items-center gap-4 mb-10"><h2 class="text-3xl font-bold">Arsip Eksklusif</h2><div class="h-[1px] bg-[#333] flex-grow"></div></div>
+            <div class="flex items-center gap-5 mb-12 water-flow gsap-hidden"><h2 class="text-3xl font-extrabold tracking-tight">Arsip Eksklusif</h2><div class="h-[1px] bg-[#222] flex-grow"></div></div>
             <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
 
         <section>
-            <div class="flex items-center gap-4 mb-10"><h2 class="text-3xl font-bold">Layanan Sistem</h2><div class="h-[1px] bg-[#333] flex-grow"></div></div>
+            <div class="flex items-center gap-5 mb-12 water-flow gsap-hidden"><h2 class="text-3xl font-extrabold tracking-tight">Layanan Sistem</h2><div class="h-[1px] bg-[#222] flex-grow"></div></div>
             <div id="tools-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
 
-        <section class="mt-24 mb-10">
-            <div class="bg-gradient-to-br from-[#0f172a] to-[#0a0a0a] border border-blue-900/40 rounded-[32px] p-8 md:p-14 text-center relative overflow-hidden interactive-card shadow-[0_0_50px_rgba(30,58,138,0.15)]">
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[200px] bg-blue-600/10 rounded-[100%] blur-[80px] pointer-events-none"></div>
-                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6 relative z-10 tracking-tight">Punya Ide? Ayo Wujudkan!</h2>
-                <div class="flex flex-wrap justify-center gap-3 mb-8 relative z-10">
-                    <span class="bg-black/60 border border-green-500/30 text-green-400 px-4 py-2 rounded-full font-bold text-sm shadow-md flex items-center gap-2"><i class="fas fa-check-circle"></i> Terima Bersih 50K</span>
-                    <span class="bg-black/60 border border-blue-500/30 text-blue-400 px-4 py-2 rounded-full font-bold text-sm shadow-md flex items-center gap-2"><i class="fas fa-globe"></i> Domain Seumur Hidup</span>
-                    <span class="bg-black/60 border border-red-500/30 text-red-400 px-4 py-2 rounded-full font-bold text-sm shadow-md flex items-center gap-2"><i class="fas fa-shield-alt"></i> 100% Garansi Refund</span>
+        <section class="mt-32 mb-10">
+            <div class="water-flow gsap-hidden bg-gradient-to-br from-[#0a0f1a] to-[#030303] border border-blue-900/40 rounded-[36px] p-10 md:p-16 text-center relative overflow-hidden interactive-card shadow-[0_30px_60px_-15px_rgba(37,99,235,0.15)]">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[90%] h-[250px] bg-blue-600/20 rounded-[100%] blur-[100px] pointer-events-none mix-blend-screen"></div>
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-8 relative z-10 tracking-tight">Punya Ide? Ayo Wujudkan!</h2>
+                <div class="flex flex-wrap justify-center gap-4 mb-10 relative z-10">
+                    <span class="bg-[#030303]/90 border border-green-500/40 text-green-400 px-5 py-2.5 rounded-full font-bold text-sm shadow-lg flex items-center gap-2"><i class="fas fa-check-circle"></i> Terima Bersih 50K</span>
+                    <span class="bg-[#030303]/90 border border-blue-500/40 text-blue-400 px-5 py-2.5 rounded-full font-bold text-sm shadow-lg flex items-center gap-2"><i class="fas fa-globe"></i> Domain Seumur Hidup</span>
+                    <span class="bg-[#030303]/90 border border-red-500/40 text-red-400 px-5 py-2.5 rounded-full font-bold text-sm shadow-lg flex items-center gap-2"><i class="fas fa-shield-alt"></i> 100% Garansi Refund</span>
                 </div>
-                <p class="text-gray-300 max-w-2xl mx-auto mb-10 relative z-10 leading-relaxed text-sm md:text-base">
+                <p class="text-gray-400 max-w-2xl mx-auto mb-12 relative z-10 leading-relaxed text-base md:text-lg">
                     Tingkatkan personal branding atau bisnis kamu dengan website profesional, responsif, dan animasi 3D interaktif yang elegan. Jika terjadi kendala teknis dari sistem kami, uang kamu akan dikembalikan penuh tanpa ribet!
                 </p>
-                <a href="#" class="inline-block bg-white text-black font-extrabold text-base md:text-lg px-8 py-4 rounded-xl interactive-btn shadow-[0_0_20px_rgba(255,255,255,0.2)] relative z-10 hover:bg-gray-200">
-                    <i class="fab fa-whatsapp text-green-600 mr-2 text-xl"></i> Pesan Jasa Sekarang
+                <a href="#" class="inline-flex items-center justify-center bg-white text-black font-extrabold text-base md:text-lg px-10 py-4 rounded-xl interactive-btn shadow-[0_0_30px_rgba(255,255,255,0.4)] relative z-10 hover:bg-gray-100">
+                    <i class="fab fa-whatsapp text-green-600 mr-2.5 text-xl"></i> Pesan Jasa Sekarang
                 </a>
             </div>
         </section>
 
     </main>
 
-    <footer class="border-t border-[#222] py-8 mt-10 text-center text-sm text-gray-500">
-        <p>Dibuat dengan hati oleh <span class="text-gray-300 font-bold">Accang</span></p>
-        <p class="mt-1">© 2026 Accang — All Rights Reserved</p>
+    <footer class="border-t border-[#111] py-10 mt-12 text-center text-sm text-gray-600">
+        <p>Dibuat dengan hati oleh <span class="text-gray-400 font-bold">Accang</span></p>
+        <p class="mt-2 font-mono text-[10px] tracking-widest text-gray-700">© 2026 ACCANG — ALL RIGHTS RESERVED</p>
     </footer>
 
     <script>
-        gsap.registerPlugin(Draggable);
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(Draggable, ScrollTrigger);
 
-        // Preloader Logic
-        const preloader = document.getElementById('preloader');
-        if (sessionStorage.getItem('visited')) {
-            preloader.style.display = 'none';
-        } else {
-            sessionStorage.setItem('visited', 'true');
-            setTimeout(() => { preloader.style.opacity = '0'; setTimeout(() => preloader.remove(), 600); }, 1500);
-        }
+            const preloader = document.getElementById('preloader');
+            
+            const runPreloader = () => {
+                if(!preloader) return initHeroAnimations();
+                
+                // Set posisi awal animasi
+                gsap.set('.g1', { x: -300, y: -200, rotation: -90, opacity: 0, translateZ: 20 });
+                gsap.set('.g2', { x: 300, y: 200, rotation: 90, opacity: 0, translateZ: 10 });
+                gsap.set('.g3', { x: -300, y: 300, rotation: -180, opacity: 0, translateZ: 30 });
 
-        // Script Google Translate (Hide UI Completely & Use Custom Selector)
-        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'id', autoDisplay: false}, 'google_translate_element'); }
-        function changeLanguage(langCode) {
-            const transitionEl = document.getElementById('lang-transition');
-            transitionEl.style.opacity = '1';
-            setTimeout(() => {
-                let selectField = document.querySelector(".goog-te-combo");
-                if (selectField) { selectField.value = langCode; selectField.dispatchEvent(new Event('change')); }
-                setTimeout(() => { transitionEl.style.opacity = '0'; }, 600);
-            }, 300);
-        }
-
-        // Typing Effect
-        const textArray = ["Accang.", "A Developer.", "An Engineer."];
-        let textIndex = 0; let charIndex = 0; let isDeleting = false;
-        const typingElement = document.getElementById("typing-text");
-        function typeEffect() {
-            const currentText = textArray[textIndex];
-            if (isDeleting) { typingElement.textContent = currentText.substring(0, charIndex - 1); charIndex--; } 
-            else { typingElement.textContent = currentText.substring(0, charIndex + 1); charIndex++; }
-            let typeSpeed = isDeleting ? 40 : 100;
-            if (!isDeleting && charIndex === currentText.length) { typeSpeed = 2500; isDeleting = true; } 
-            else if (isDeleting && charIndex === 0) { isDeleting = false; textIndex = (textIndex + 1) % textArray.length; typeSpeed = 500; }
-            setTimeout(typeEffect, typeSpeed);
-        }
-        typeEffect();
-
-        // Data JSON Loader (Kuat & Anti Error)
-        async function loadPortfolioData() {
-            let data;
-            try {
-                const response = await fetch('data.json');
-                if(!response.ok) throw new Error("JSON Not Found");
-                data = await response.json();
-            } catch (error) {
-                console.warn("Menggunakan data fallback.");
-                data = {
-                    "acc_projects": [
-                        { "name": "Userbot Telegram Telethon", "desc": "Telegram Userbot berbasis Telethon untuk otomatisasi dan kontrol akun.", "link": "project/userbottelegramaccang.zip", "img": "assets/userbot.jpg" },
-                        { "name": "Whatsapp Bot", "desc": "WhatsApp Bot berbasis Baileys untuk otomatisasi pesan, manajemen grup, dan fitur utility.", "link": "project/whatsappbot.zip", "img": "assets/Untitled38_20260414204555.png" }
-                    ],
-                    "acc_tools": [
-                        { "name": "Tiktok Downloader", "desc": "Download video TikTok tanpa watermark, cepat & gratis.", "link": "tools/tiktok-dl.html", "img": "assets/Untitled37_20260414172803.png" },
-                        { "name": "Encrypt File", "desc": "Website untuk mengenkripsi file HTML & JavaScript agar kode lebih aman dan tidak mudah dibaca.", "link": "tools/encrypt-file.html", "img": "assets/Untitled43_20260416211339.png" },
-                        { "name": "Web2Zip", "desc": "Web2Zip ini gunanya untuk mengunduh seluruh isi website melalui satu URL dan membungkusnya menjadi file ZIP secara otomatis.", "link": "tools/web2zip.html", "img": "assets/Untitled44_20260417100215.png" },
-                        { "name": "Lonnie Ai", "desc": "Lonnie AI: Premium Hacker Interface. Eksekusi perintah tanpa filter melalui OpenRouter API", "link": "tools/LonnieAi.html", "img": "assets/Untitled46_20260418100412.jpg" }
-                    ]
-                };
-            }
-
-            const renderCards = (items, containerId, badgeText, btnText, extraBtnClass = "") => {
-                const container = document.getElementById(containerId);
-                container.innerHTML = ''; // Clear first to avoid duplication
-                items.forEach(item => {
-                    container.innerHTML += `
-                        <div class="bg-[#111] border border-[#222] rounded-2xl p-5 flex flex-col interactive-card group">
-                            <div class="w-full h-48 bg-[#1a1a1a] rounded-xl mb-5 overflow-hidden border border-[#222] group-hover:border-[#444] transition-colors"><img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://via.placeholder.com/400x200/1a1a1a/555?text=No+Image'"></div>
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">${item.name}</h3><p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">${item.desc}</p>
-                            <div class="flex justify-between items-center mt-auto pt-4 border-t border-[#222]">
-                                <span class="text-xs bg-[#1a1a1a] px-3 py-1.5 rounded-md text-gray-400 font-medium border border-[#333]">${badgeText}</span>
-                                <a href="${item.link}" class="bg-gray-200 text-black px-5 py-2 rounded-lg text-sm font-bold interactive-btn hover:bg-white shadow-md ${extraBtnClass}">${btnText}</a>
-                            </div>
-                        </div>`;
-                });
+                const tl = gsap.timeline();
+                // 1. Gears Masuk
+                tl.to('.g1, .g2, .g3', {
+                    x: 0, y: 0, rotation: 0, opacity: 1, duration: 1.5, ease: "back.out(1.2)", stagger: 0.15
+                })
+                // 2. Putar Gear secara infinite menggunakan GSAP murni agar tidak terputus CSS vs Transform
+                .add(() => {
+                    gsap.to('.g1', { rotation: "+=360", duration: 2.5, repeat: -1, ease: "none" });
+                    gsap.to('.g2', { rotation: "-=360", duration: 1.5, repeat: -1, ease: "none" });
+                    gsap.to('.g3', { rotation: "-=360", duration: 1, repeat: -1, ease: "none" });
+                })
+                // 3. Tarik Tirai
+                .to('#preloader-curtain', { yPercent: -100, duration: 2, ease: "power3.inOut" }, "+=0.6")
+                .to('#winch-cable', { yPercent: -100, duration: 2, ease: "power3.inOut" }, "<")
+                // 4. Gears Terbang ke Atas (TIDAK BERHENTI BERPUTAR SAAT NAIK)
+                .to('.preloader-scene', { y: -window.innerHeight, duration: 1.8, ease: "power3.in" }, "-=1.4")
+                // 5. Cleanup
+                .to('#preloader', { autoAlpha: 0, duration: 0.1, onComplete: () => {
+                    preloader.remove();
+                    initHeroAnimations();
+                }});
             };
-            renderCards(data.acc_projects, 'projects-container', 'PAKET', 'Unduh File');
-            renderCards(data.acc_tools, 'tools-container', 'WEBSITE', 'Akses Web', "bg-transparent border border-gray-600 text-gray-300 hover:text-black hover:border-white hover:bg-white");
-        }
 
-        // --- LANYARD 3D FLIP PHYSICS (GLITCH FREE) ---
-        const badgeWrapper = document.getElementById("badge-wrapper");
-        const strapPath = document.querySelector(".strap-path");
-        const leftNeckPos = { x: 110, y: 0 }; 
-        const rightNeckPos = { x: 230, y: 0 }; 
-        const initialHangDistance = 140; 
-        gsap.set(badgeWrapper, { y: 20 }); 
+            if (sessionStorage.getItem('visited_accang')) {
+                if(preloader) preloader.style.display = 'none';
+                initHeroAnimations();
+            } else {
+                sessionStorage.setItem('visited_accang', 'true');
+                runPreloader();
+            }
 
-        function updateLanyardPath(cardX, cardY) {
-            const clipTargetX = (340 / 2) + cardX;
-            const clipTargetY = initialHangDistance + cardY; 
-            const dynamicPathStr = `M ${leftNeckPos.x} ${leftNeckPos.y} Q ${leftNeckPos.x} ${(clipTargetY / 2)}, ${clipTargetX} ${clipTargetY} Q ${rightNeckPos.x} ${(clipTargetY / 2)}, ${rightNeckPos.x} ${rightNeckPos.y}`;
-            strapPath.setAttribute("d", dynamicPathStr);
-        }
-        updateLanyardPath(0, 20);
+            function initHeroAnimations() {
+                gsap.to('.nav-anim', { y: 0, duration: 1, ease: "power3.out" });
+                
+                // Gunakan GSAP untuk animasi hero
+                gsap.fromTo('.hero-text', { autoAlpha: 0, y: -40 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: "power3.out" });
+                gsap.fromTo('.hero-3d', { autoAlpha: 0, scale: 0.8, rotationY: 45 }, { autoAlpha: 1, scale: 1, rotationY: 0, duration: 1.5, ease: "back.out(1.2)" });
+                
+                typeEffect();
+                loadPortfolioData();
+            }
 
-        Draggable.create(badgeWrapper, {
-            type: "x,y",
-            edgeResistance: 0.85, 
-            bounds: { minX: -200, maxX: 200, minY: -30, maxY: 120 }, // Limit dragging so the rubber string logic won't break
-            allowNativeTouchScrolling: false, // Penting: stop screen glitch on mobile scroll
-            onPress: function() { 
-                badgeWrapper.classList.add("dragging"); 
-                gsap.to(badgeWrapper, { scale: 1.05, duration: 0.2 }); 
-            },
-            onDrag: function() {
-                // Kalkulasi rotasi Y yang besar agar mudah membalik ke sisi belakang (180deg)
-                let rotateY = this.x * 1.5; 
-                let rotateX = -(this.y / 250) * 15; 
-                gsap.set(badgeWrapper, { rotationY: rotateY, rotationX: rotateX, rotationZ: this.x * 0.05 });
-                updateLanyardPath(this.x, this.y);
-            },
-            onRelease: function() {
-                badgeWrapper.classList.remove("dragging");
-                gsap.to(badgeWrapper, {
-                    x: 0, y: 20, rotationX: 0, rotationY: 0, rotationZ: 0, scale: 1,
-                    ease: "elastic.out(1, 0.4)", duration: 2.5, // Ayunan karet natural
-                    onUpdate: function() { updateLanyardPath(gsap.getProperty(badgeWrapper, "x"), gsap.getProperty(badgeWrapper, "y")); }
+            function initScrollAnimations() {
+                const lanyard = document.getElementById('lanyard-viewport');
+                if(lanyard) {
+                    gsap.fromTo(lanyard, { autoAlpha: 0, y: -50 }, {
+                        scrollTrigger: { trigger: '#profile-section', start: "top 80%" },
+                        autoAlpha: 1, y: 0, duration: 1.2, ease: "power3.out"
+                    });
+                }
+                
+                // Animasi ringan untuk list cards - TANPA Blur (No Lag Mobile)
+                gsap.utils.toArray('.water-flow').forEach((elem) => {
+                    gsap.fromTo(elem,
+                        { autoAlpha: 0, y: 40 },
+                        { 
+                            scrollTrigger: { trigger: elem, start: "top 85%", onEnter: () => elem.classList.add('waterfall-active') }, 
+                            autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" 
+                        }
+                    );
                 });
             }
-        });
 
-        // Responsive Scale for Octahedron
-        const octaAnim = document.getElementById("octa-anim");
-        const resizeOcta = () => {
-            if(window.innerWidth >= 768) { octaAnim.style.setProperty("--scale", "2.2"); octaAnim.style.transform = "scale(2.2)"; } 
-            else { octaAnim.style.setProperty("--scale", "1.8"); octaAnim.style.transform = "scale(1.8)"; }
-        };
-        window.addEventListener('resize', resizeOcta);
-        resizeOcta();
-        
-        document.addEventListener('DOMContentLoaded', loadPortfolioData);
+            // Typing Effect No Lag
+            const textArray = ["Accang.", "A Developer.", "An Engineer."];
+            let textIndex = 0, charIndex = 0, isDeleting = false;
+            const typingElement = document.getElementById("typing-text");
+            function typeEffect() {
+                if(!typingElement) return;
+                const currentText = textArray[textIndex];
+                if (isDeleting) { typingElement.textContent = currentText.substring(0, charIndex - 1); charIndex--; } 
+                else { typingElement.textContent = currentText.substring(0, charIndex + 1); charIndex++; }
+                let typeSpeed = isDeleting ? 40 : 100;
+                if (!isDeleting && charIndex === currentText.length) { typeSpeed = 2500; isDeleting = true; } 
+                else if (isDeleting && charIndex === 0) { isDeleting = false; textIndex = (textIndex + 1) % textArray.length; typeSpeed = 500; }
+                setTimeout(typeEffect, typeSpeed);
+            }
+
+            // Data Render 
+            async function loadPortfolioData() {
+                let data;
+                try {
+                    const response = await fetch('data.json');
+                    if(!response.ok) throw new Error("JSON Not Found");
+                    data = await response.json();
+                } catch (error) {
+                    data = {
+                        "acc_projects": [
+                            { "name": "Userbot Telegram Telethon", "desc": "Telegram Userbot berbasis Telethon untuk otomatisasi dan kontrol akun.", "link": "project/userbottelegramaccang.zip", "img": "assets/userbot.jpg" },
+                            { "name": "Whatsapp Bot", "desc": "WhatsApp Bot berbasis Baileys untuk otomatisasi pesan, manajemen grup, dan fitur utility.", "link": "project/whatsappbot.zip", "img": "assets/Untitled38_20260414204555.png" }
+                        ],
+                        "acc_tools": [
+                            { "name": "Tiktok Downloader", "desc": "Download video TikTok tanpa watermark, cepat & gratis.", "link": "tools/tiktok-dl.html", "img": "assets/Untitled37_20260414172803.png" },
+                            { "name": "Encrypt File", "desc": "Website untuk mengenkripsi file HTML & JavaScript agar kode lebih aman dan tidak mudah dibaca.", "link": "tools/encrypt-file.html", "img": "assets/Untitled43_20260416211339.png" }
+                        ]
+                    };
+                }
+
+                const renderCards = (items, containerId, badgeText, btnText, extraBtnClass = "") => {
+                    const container = document.getElementById(containerId);
+                    if(!container) return;
+                    container.innerHTML = '';
+                    items.forEach((item) => {
+                        container.innerHTML += `
+                            <div class="dynamic-card bg-[#080808] border border-[#111] rounded-2xl p-6 flex flex-col interactive-card group water-flow shadow-lg gsap-hidden">
+                                <div class="w-full h-52 bg-[#0a0a0a] rounded-xl mb-6 overflow-hidden border border-[#1a1a1a] group-hover:border-blue-900/50 transition-colors relative"><div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-colors z-10 pointer-events-none"></div><img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out" onerror="this.src='https://via.placeholder.com/400x200/111/555?text=No+Image'"></div>
+                                <h3 class="text-xl font-bold text-white mb-2.5 group-hover:text-blue-400 transition-colors tracking-tight">${item.name}</h3><p class="text-gray-400 text-sm mb-8 flex-grow leading-relaxed">${item.desc}</p>
+                                <div class="flex justify-between items-center mt-auto pt-5 border-t border-[#1a1a1a]">
+                                    <span class="text-[10px] bg-[#111] px-3.5 py-1.5 rounded-md text-blue-500 font-bold border border-[#222] tracking-widest font-mono shadow-inner">${badgeText}</span>
+                                    <a href="${item.link}" class="bg-gray-200 text-black px-6 py-2.5 rounded-lg text-sm font-extrabold interactive-btn hover:bg-white shadow-md ${extraBtnClass}">${btnText}</a>
+                                </div>
+                            </div>`;
+                    });
+                };
+                
+                renderCards(data.acc_projects, 'projects-container', 'PAKET', 'Unduh File');
+                renderCards(data.acc_tools, 'tools-container', 'WEBSITE', 'Akses Web', "bg-transparent border border-gray-600 text-gray-300 hover:text-white hover:border-white hover:bg-[#111]");
+                
+                setTimeout(() => {
+                    initScrollAnimations();
+                    ScrollTrigger.refresh();
+                }, 200);
+            }
+
+            // PURE LANYARD PHYSICS ENGINE HD (Resized for Mobile/PC)
+            const badgeMaster = document.getElementById('badge-master');
+            const p1 = document.getElementById('strap-p1');
+            const p2 = document.getElementById('strap-p2');
+            const rL = document.getElementById('ring-left');
+            const rR = document.getElementById('ring-right');
+
+            if (badgeMaster && p1 && p2) {
+                gsap.set(badgeMaster, { y: 25 });
+
+                function updateLanyard(x, y) {
+                    const centerX = 325; 
+                    const anchorLX = centerX - 130;
+                    const anchorRX = centerX + 130;
+                    const targetX = centerX + x;
+                    const targetY = y + 170; 
+                    const d = `M ${anchorLX} 0 C ${anchorLX} ${targetY * 0.4}, ${targetX - 25} ${targetY * 0.7}, ${targetX} ${targetY} C ${targetX + 25} ${targetY * 0.7}, ${anchorRX} ${targetY * 0.4}, ${anchorRX} 0`;
+                    p1.setAttribute('d', d); p2.setAttribute('d', d);
+                    rL.setAttribute('cx', anchorLX); rL.setAttribute('cy', 0);
+                    rR.setAttribute('cx', anchorRX); rR.setAttribute('cy', 0);
+                }
+
+                let dragBounds = { minX: -200, maxX: 200, minY: -30, maxY: 120 };
+                function updateBounds() {
+                    const width = window.innerWidth;
+                    if (width < 480) { dragBounds = { minX: -80, maxX: 80, minY: -20, maxY: 70 }; }
+                    else if (width < 768) { dragBounds = { minX: -120, maxX: 120, minY: -20, maxY: 90 }; } 
+                    else { dragBounds = { minX: -200, maxX: 200, minY: -30, maxY: 130 }; }
+                    
+                    const dragInst = Draggable.get(badgeMaster);
+                    if(dragInst) dragInst.applyBounds(dragBounds);
+                }
+
+                Draggable.create(badgeMaster, {
+                    type: "x,y", edgeResistance: 0.85, bounds: dragBounds, allowNativeTouchScrolling: false,
+                    onPress: function() { badgeMaster.classList.add("dragging"); gsap.to(badgeMaster, { scale: 1.05, duration: 0.2 }); },
+                    onDrag: function() {
+                        gsap.set(badgeMaster, { rotationY: this.x * 1.5, rotationX: -(this.y / 250) * 15, rotationZ: this.x * 0.05 });
+                        updateLanyard(this.x, this.y);
+                    },
+                    onRelease: function() {
+                        badgeMaster.classList.remove("dragging");
+                        gsap.to(badgeMaster, {
+                            x: 0, y: 25, rotationX: 0, rotationY: 0, rotationZ: 0, scale: 1, ease: "elastic.out(1.2, 0.4)", duration: 2.5,
+                            onUpdate: function() { updateLanyard(gsap.getProperty(badgeMaster, "x"), gsap.getProperty(badgeMaster, "y")); }
+                        });
+                    }
+                });
+
+                window.addEventListener('resize', () => { updateLanyard(0, 25); updateBounds(); });
+                updateLanyard(0, 25); updateBounds();
+            }
+
+            const octaAnim = document.getElementById("octa-anim");
+            if (octaAnim) {
+                const resizeOcta = () => {
+                    const scale = window.innerWidth >= 768 ? "2.4" : "1.8";
+                    octaAnim.style.setProperty("--scale", scale);
+                    octaAnim.style.transform = `scale(${scale})`;
+                };
+                window.addEventListener('resize', resizeOcta);
+                resizeOcta();
+            }
+            
+            window.changeLanguage = function(langCode) {
+                const transitionEl = document.getElementById('lang-transition');
+                transitionEl.style.opacity = '1';
+                setTimeout(() => {
+                    let selectField = document.querySelector(".goog-te-combo");
+                    if (selectField) { selectField.value = langCode; selectField.dispatchEvent(new Event('change')); }
+                    setTimeout(() => { transitionEl.style.opacity = '0'; }, 600);
+                }, 300);
+            };
+            window.googleTranslateElementInit = function() { new google.translate.TranslateElement({pageLanguage: 'id', autoDisplay: false}, 'google_translate_element'); };
+        });
     </script>
 </body>
 </html>

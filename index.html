@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Accang. - Portfolio</title>
+    <title>Accang. - Lead Developer & Engineer Portfolio</title>
+    <meta name="description" content="Portfolio digital Accang. Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.">
+    <meta name="keywords" content="Accang, Developer, Engineer, Python, JavaScript, AI, Backend, Frontend, Telegram Bot, WhatsApp Bot, Web Development">
+    <meta name="author" content="Accang">
+    <meta name="theme-color" content="#030303">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://accang.com/">
+    <meta property="og:title" content="Accang. - Lead Developer & Engineer Portfolio">
+    <meta property="og:description" content="Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.">
+    <meta property="og:image" content="https://ui-avatars.com/api/?name=Accang&background=2563eb&color=fff&size=512&bold=true">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://accang.vercel.app/">
+    <meta property="twitter:title" content="Accang. - Lead Developer & Engineer Portfolio">
+    <meta property="twitter:description" content="Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.">
+    <meta property="twitter:image" content="https://ui-avatars.com/api/?name=Accang&background=2563eb&color=fff&size=512&bold=true">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,6 +49,24 @@
         #google_translate_element, .goog-te-banner-frame, .goog-te-gadget, .skiptranslate, .goog-tooltip, .goog-tooltip:hover, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; border: none !important; margin: 0 !important; padding: 0 !important; }
         body { top: 0px !important; position: static !important; min-height: 100vh; }
         
+        /* EXPANDING SOCIAL BUTTONS */
+        .social-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            height: 52px; padding: 0 16px; border-radius: 26px;
+            overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 52px; position: relative; cursor: pointer;
+        }
+        .social-btn i { font-size: 20px; transition: transform 0.3s ease; }
+        .social-btn span {
+            max-width: 0; opacity: 0; white-space: nowrap; transition: all 0.4s ease;
+            margin-left: 0; font-weight: 600; font-size: 15px; overflow: hidden;
+        }
+        .social-btn:hover, .social-btn:active { width: 145px; }
+        .social-btn:hover i, .social-btn:active i { transform: scale(1.15); }
+        .social-btn:hover span, .social-btn:active span { max-width: 100px; opacity: 1; margin-left: 10px; }
+        .social-btn.wa:hover { border-color: rgba(34, 197, 94, 0.5); background-color: rgba(34, 197, 94, 0.08); color: white; }
+        .social-btn.tk:hover { border-color: rgba(236, 72, 153, 0.5); background-color: rgba(236, 72, 153, 0.08); color: white; }
+
         /* Preloader */
         #preloader { position: fixed; inset: 0; z-index: 9999; display: flex; justify-content: center; align-items: center; overflow: hidden; pointer-events: none;}
         #preloader-curtain { position: absolute; inset: 0; background: linear-gradient(to bottom, #030303 40%, #0a1128 80%, #1d4ed8 100%); transform-origin: bottom; z-index: 1; will-change: transform; }
@@ -44,7 +79,7 @@
         .g2 { top: 50px; left: 60px; font-size: 48px; color: #9ca3af; }
         .g3 { top: 68px; left: -12px; font-size: 36px; color: #4b5563; }
 
-        /* HD Waterfall Flow - Optimized CSS Animation */
+        /* HD Waterfall Flow */
         .water-flow { position: relative; overflow: hidden; }
         .water-flow::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -82,13 +117,11 @@
         .profile-img { width: 100px; height: 100px; border-radius: 11px; object-fit: cover; border: 3px solid #080808; filter: contrast(1.15) saturate(1.1); }
         .id-chip { width: 38px; height: 28px; background: linear-gradient(135deg, #eab308, #a16207); border-radius: 6px; border: 1px solid #713f12; position: absolute; right: 22px; top: 75px; opacity: 0.9; z-index: 12; transform: translateZ(4px); background-image: repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0,0,0,0.15) 5px, rgba(0,0,0,0.15) 6px), repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 11px); box-shadow: inset 0 1px 2px rgba(255,255,255,0.4); }
 
-        /* 3D OCTAHEDRON - Optimized for ZERO Lag */
+        /* 3D OCTAHEDRON */
         .object-3d-scene { perspective: 1200px; width: 100%; height: 400px; display: flex; justify-content: center; align-items: center; }
         .octahedron { position: relative; width: 100px; height: 100px; transform-style: preserve-3d; animation: rotate-obj 20s linear infinite; transform: scale(1.8) translateZ(0); will-change: transform; }
         @media (min-width: 768px) { .octahedron { transform: scale(2.4) translateZ(0); } }
         @keyframes rotate-obj { 0% { transform: scale(var(--scale, 2)) rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: scale(var(--scale, 2)) rotateX(360deg) rotateY(720deg) rotateZ(360deg); } }
-        
-        /* Removed expensive backdrop-filter for mobile GPU optimization */
         .octa-face { position: absolute; width: 100px; height: 100px; border: 1.5px solid rgba(59,130,246,0.5); background: rgba(59,130,246,0.1); box-shadow: inset 0 0 20px rgba(59,130,246,0.2); backface-visibility: hidden; }
         .octa-face.ft { transform: rotateX( 35deg) translateZ(35px); border-bottom: none; border-left: none;}
         .octa-face.bk { transform: rotateX(-35deg) translateZ(-35px) rotateY(180deg); border-bottom: none; border-left: none; }
@@ -147,10 +180,18 @@
                 </div>
                 <h1 id="typing-text" class="notranslate text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 typing-cursor h-[60px] sm:h-[80px] md:h-[90px] tracking-tight">Accang.</h1>
                 <p class="text-gray-400 text-base sm:text-lg mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">Merancang arsitektur digital dengan presisi. Spesialisasi dalam ekosistem korporat, AI, dan otomatisasi sistem berskala tinggi.</p>
+                
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                    <a href="#" class="bg-[#0a0a0a] border border-[#222] px-6 py-3.5 rounded-xl flex items-center gap-2 font-semibold interactive-btn hover:text-white hover:border-green-500/50 hover:bg-green-500/5 shadow-lg"><i class="fab fa-whatsapp text-green-500 text-lg"></i> WhatsApp</a>
-                    <a href="#" class="bg-[#0a0a0a] border border-[#222] px-6 py-3.5 rounded-xl flex items-center gap-2 font-semibold interactive-btn hover:text-white hover:border-pink-500/50 hover:bg-pink-500/5 shadow-lg"><i class="fab fa-tiktok text-gray-200 text-lg"></i> Tiktok</a>
+                    <a href="https://wa.me/6285137027046" target="_blank" class="social-btn wa bg-[#0a0a0a] border border-[#222] shadow-lg text-gray-300">
+                        <i class="fab fa-whatsapp text-green-500"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@qrnlay" target="_blank" class="social-btn tk bg-[#0a0a0a] border border-[#222] shadow-lg text-gray-300">
+                        <i class="fab fa-tiktok text-gray-200"></i>
+                        <span>TikTok</span>
+                    </a>
                 </div>
+
             </div>
             <div class="relative w-full h-[350px] md:h-[500px] flex items-center justify-center overflow-visible order-1 md:order-2 hero-3d gsap-hidden">
                 <div class="object-3d-scene">
@@ -304,7 +345,7 @@
                 <p class="text-gray-400 max-w-2xl mx-auto mb-12 relative z-10 leading-relaxed text-base md:text-lg">
                     Tingkatkan personal branding atau bisnis kamu dengan website profesional, responsif, dan animasi 3D interaktif yang elegan. Jika terjadi kendala teknis dari sistem kami, uang kamu akan dikembalikan penuh tanpa ribet!
                 </p>
-                <a href="#" class="inline-flex items-center justify-center bg-white text-black font-extrabold text-base md:text-lg px-10 py-4 rounded-xl interactive-btn shadow-[0_0_30px_rgba(255,255,255,0.4)] relative z-10 hover:bg-gray-100">
+                <a href="https://wa.me/6285137027046" target="_blank" class="inline-flex items-center justify-center bg-white text-black font-extrabold text-base md:text-lg px-10 py-4 rounded-xl interactive-btn shadow-[0_0_30px_rgba(255,255,255,0.4)] relative z-10 hover:bg-gray-100">
                     <i class="fab fa-whatsapp text-green-600 mr-2.5 text-xl"></i> Pesan Jasa Sekarang
                 </a>
             </div>
@@ -326,28 +367,22 @@
             const runPreloader = () => {
                 if(!preloader) return initHeroAnimations();
                 
-                // Set posisi awal animasi
                 gsap.set('.g1', { x: -300, y: -200, rotation: -90, opacity: 0, translateZ: 20 });
                 gsap.set('.g2', { x: 300, y: 200, rotation: 90, opacity: 0, translateZ: 10 });
                 gsap.set('.g3', { x: -300, y: 300, rotation: -180, opacity: 0, translateZ: 30 });
 
                 const tl = gsap.timeline();
-                // 1. Gears Masuk
                 tl.to('.g1, .g2, .g3', {
                     x: 0, y: 0, rotation: 0, opacity: 1, duration: 1.5, ease: "back.out(1.2)", stagger: 0.15
                 })
-                // 2. Putar Gear secara infinite menggunakan GSAP murni agar tidak terputus CSS vs Transform
                 .add(() => {
                     gsap.to('.g1', { rotation: "+=360", duration: 2.5, repeat: -1, ease: "none" });
                     gsap.to('.g2', { rotation: "-=360", duration: 1.5, repeat: -1, ease: "none" });
                     gsap.to('.g3', { rotation: "-=360", duration: 1, repeat: -1, ease: "none" });
                 })
-                // 3. Tarik Tirai
                 .to('#preloader-curtain', { yPercent: -100, duration: 2, ease: "power3.inOut" }, "+=0.6")
                 .to('#winch-cable', { yPercent: -100, duration: 2, ease: "power3.inOut" }, "<")
-                // 4. Gears Terbang ke Atas (TIDAK BERHENTI BERPUTAR SAAT NAIK)
                 .to('.preloader-scene', { y: -window.innerHeight, duration: 1.8, ease: "power3.in" }, "-=1.4")
-                // 5. Cleanup
                 .to('#preloader', { autoAlpha: 0, duration: 0.1, onComplete: () => {
                     preloader.remove();
                     initHeroAnimations();
@@ -364,11 +399,8 @@
 
             function initHeroAnimations() {
                 gsap.to('.nav-anim', { y: 0, duration: 1, ease: "power3.out" });
-                
-                // Gunakan GSAP untuk animasi hero
                 gsap.fromTo('.hero-text', { autoAlpha: 0, y: -40 }, { autoAlpha: 1, y: 0, duration: 1.2, ease: "power3.out" });
                 gsap.fromTo('.hero-3d', { autoAlpha: 0, scale: 0.8, rotationY: 45 }, { autoAlpha: 1, scale: 1, rotationY: 0, duration: 1.5, ease: "back.out(1.2)" });
-                
                 typeEffect();
                 loadPortfolioData();
             }
@@ -382,7 +414,6 @@
                     });
                 }
                 
-                // Animasi ringan untuk list cards - TANPA Blur (No Lag Mobile)
                 gsap.utils.toArray('.water-flow').forEach((elem) => {
                     gsap.fromTo(elem,
                         { autoAlpha: 0, y: 40 },
@@ -394,7 +425,6 @@
                 });
             }
 
-            // Typing Effect No Lag
             const textArray = ["Accang.", "A Developer.", "An Engineer."];
             let textIndex = 0, charIndex = 0, isDeleting = false;
             const typingElement = document.getElementById("typing-text");
@@ -409,7 +439,6 @@
                 setTimeout(typeEffect, typeSpeed);
             }
 
-            // Data Render 
             async function loadPortfolioData() {
                 let data;
                 try {
@@ -455,7 +484,6 @@
                 }, 200);
             }
 
-            // PURE LANYARD PHYSICS ENGINE HD (Resized for Mobile/PC)
             const badgeMaster = document.getElementById('badge-master');
             const p1 = document.getElementById('strap-p1');
             const p2 = document.getElementById('strap-p2');
